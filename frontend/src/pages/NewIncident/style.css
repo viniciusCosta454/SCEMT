@@ -1,0 +1,85 @@
+.new-vaga-container{
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+.new-vaga-container .conteiner {
+    width: 100%;
+    padding: 96px;
+    background: white;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.new-vaga-container .conteiner section{
+    width: 100%;
+    max-width: 380px;
+}
+.new-vaga-container .conteiner section h1 {
+    margin: 64px 0 32px;
+    font-size: 32px;
+}
+.new-vaga-container .conteiner section p {
+    font-size: 18px;
+    color: #737380;
+    line-height: 32px;
+}
+.new-vaga-container .conteiner form{
+    width: 100%;
+    max-width: 450px;
+}
+.new-vaga-container .conteiner form input,
+.new-vaga-container .conteiner form textarea{
+    margin-top: 8px;
+}
+
+/* === PHOTOS UPLOAD === */
+form #photos-upload {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin-top: 8px;
+}
+form #photos-upload p {
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px -6px #333;;
+    background-color: #e02041;
+    color: white;
+    width: 50%;
+    text-align: center;
+    font-size: 16px;
+}
+form input#photos-input {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow: hidden;
+    width: 50%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    cursor: pointer;
+}
+form #photos-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 8px;
+    width: 100%;
+    margin: 8px 0;
+}
+form #photos-preview img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
