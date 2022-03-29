@@ -1,15 +1,13 @@
-# Keep-Flux
+# TCC
 
-Trabalho da materia de Experiencia Criativa
+Software Cost & Effort Measurement Tool - SCEMT
 
 
 Trello: https://trello.com/b/1duHMI1w/keep-flux
 =======
-Trabalho da materia de Experiencia Criativa
 
-Grupo 7
 
-Equipe : Pedro Kirstien, Thales Vinicius, Vinicius Costa
+Equipe : Victor Negrelli Vinicius Costa
 
 ![Screenshot_2](https://user-images.githubusercontent.com/52724157/83423146-f5dbcf00-a400-11ea-9a94-46a5e43d7865.png)
 
