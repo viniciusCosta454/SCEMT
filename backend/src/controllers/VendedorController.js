@@ -25,12 +25,15 @@ module.exports = {
     },
 
     async create(request,response) {
-        const {nome, cpf, sexo, nacimento } = request.body
+        const {nome, cpf,numero,endereco,email,sexo,nacimento } = request.body
         const empresa_id = request.headers.authorization
 
         const [id] = await connection("Vendedor").insert({
             nome,
             cpf,
+            numero,
+            endereco,
+            email,
             sexo,
             nacimento,
             empresa_id
@@ -53,6 +56,16 @@ module.exports = {
         await connection("Vendedor").where("id",id).delete()
 
         return response.status(204).send()
-    }
+    },
+    async edit(request, response) {
+        const { id } = request.params
+        const { numero ,endereco, email} = request.body
+    
+        await connection('Vendedor')
+          .where('id', id)
+          .update({ numero , endereco, email })
+    
+        return response.status(204).send()
+      }
     
 }

@@ -11,6 +11,9 @@ const PedidoController = require("./controllers/PedidoController")
 const EntregaController = require("./controllers/EntregaController")
 const PdfController = require("./controllers/PdfController")
 const FinanceiroController = require("./controllers/FinanceiroController")
+const MembroController = require("./controllers/MembroController")
+const EquipeController = require("./controllers/EquipeController")
+const ProjetoController = require("./controllers/ProjetoController")
 
 const routes = express.Router()
 
@@ -23,6 +26,9 @@ routes.get("/profile/cliente",ProfileController.clientes)
 routes.get("/profile/vendedor",ProfileController.vendedor)
 routes.get("/profile/entrega",ProfileController.entrega)
 routes.get("/profile/financeiro",ProfileController.financeiro)
+routes.get("/profile/membro",ProfileController.membro)
+routes.get("/profile/equipe",ProfileController.equipe)
+routes.get("/profile/projeto",ProfileController.projeto)
 
 routes.get("/empresas",EmpresaController.index)
 routes.post("/empresas",EmpresaController.create)
@@ -55,5 +61,20 @@ routes.get("/entrega",EntregaController.index)
 routes.post("/entrega",EntregaController.create)
 routes.delete("/entrega/:id",EntregaController.delete)
 routes.put('/entrega/:id', EntregaController.edit)
+
+routes.get("/Membro",MembroController.index)
+routes.post("/Membro",MembroController.create)
+routes.delete("/Membro/:id",MembroController.delete)
+routes.put('/Membro/:id', MembroController.edit)
+
+routes.get("/Equipe",EquipeController.index)
+routes.post("/Equipe",EquipeController.create)
+routes.delete("/Equipe/:id",EquipeController.delete)
+routes.put('/Equipe/:id', EquipeController.edit)
+
+routes.get("/Projeto",ProjetoController.index)
+routes.post("/Projeto",ProjetoController.create)
+routes.delete("/Projeto/:id",ProjetoController.delete)
+routes.put('/Projeto/:id', ProjetoController.edit)
 
 module.exports = routes

@@ -43,14 +43,14 @@ export default function Register() {
     <div className="register-container">
       <div className="conteiner">
         <section>
-          <img className="imgLogo" src={logoImg} alt="Be The Hero" />
+          <img className="LogoCadastro" src={logoImg} alt="SCEMT" />
           <h1>Cadastro</h1>
           <p>
-            Faca seu cadastro, e use esse sistema e mude .
+            Faça seu cadastro, e tenha acesso ao nosso sistema.
           </p>
           <Link className="back-link" to="/">
-            <FiArrowLeft size={16} color="#E02041" />
-            Ja tenho cadastro
+            <FiArrowLeft size={16} color="#38b6ff" />
+            Voltar a página de login
           </Link>
         </section>
         <form onSubmit={handleRegister} >

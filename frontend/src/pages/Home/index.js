@@ -18,40 +18,24 @@ export default function Home() {
     <div className="profile-container">
       <header>
         <img src={logoImg} alt="Keep Flux" />
-        <span>Bem vinda, {empresaName}</span>
-        <Link className="button" to="/menu">
-          Funcionário
+        <span>Bem vindo, {empresaName}</span>
+        <Link className="button" to="/novoProjeto">
+          Criar novo projeto
         </Link>
         <button onClick={handleLogout} type="button">
-          <FiPower size={18} color="#e02041"></FiPower>
+          <FiPower size={18} color="#38b6ff"></FiPower>
         </button>
       </header>
-      <h1>Gerente Painel de {empresaName}</h1>
+      <h1>Painel de Gerenciamento {empresaName}</h1>
       <ul>
-        <Link className="button" to="/clientes">
-          Clientes
+        <Link className="button" to="/projetos">
+          Projetos
         </Link>
-         <Link className="button" to="/vendedor">
-          Vendedor
+         <Link className="button" to="/equipe">
+          Equipes
         </Link>
-        <Link className="button" to="/prod/new">
-          Cadastrar Produto
-        </Link>
-        <Link className="button" to="/profile">
-          Estoque
-        </Link>
-        <Link className="button" to="/pedidos">
-          Pedidos
-        </Link>
-       <Link className="button" to="/entrega">
-          Entregas
-        </Link>
-       
-        <Link className="button" to="/relatorioM">
-          Relatórios
-        </Link>
-        <Link className="button" to="/financeiro">
-          Financeiro
+        <Link className="button" to="/membro">
+          Membros
         </Link>
        
        
