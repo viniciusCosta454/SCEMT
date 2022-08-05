@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
 import { Link , useHistory } from "react-router-dom"
@@ -7,17 +7,34 @@ import api from "../../services/api"
 
 export default function EquipeNew() {
   const [nome, setNome] = useState("")
-  const [membro,setMembro] = useState("")
+  const [membrosProjeto,setMembrosProjeto] = useState([])
+  const [membros,setMembros] = useState([])
+  
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
+  
 
+
+  useEffect(() => {
+    api
+      .get("/profile/membro", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+        
+        setMembros(response.data);
+      });
+  }, [empresaId]);
   async function newEquipe(e){
     e.preventDefault()
 
     const data = {
       nome,
-      membro
+      membro:membrosProjeto
     }
+
 
     try {
       await api.post("Equipe",data,{
@@ -52,11 +69,28 @@ export default function EquipeNew() {
               value={nome}
               onChange={e => setNome(e.target.value)}
               placeholder="Nome da Equipe"/>
+        
+         
+
+
+        {
+          membros.map(membrolist => ( <div> <input type="checkbox" onChange={e => { 
+
+            if (membrosProjeto.includes( membrolist.nome) ) {
+              for( var i = 0; i < membrosProjeto.length; i++){ 
+    
+                if ( membrosProjeto[i] === membrolist.nome) { 
             
-              <input 
-              value={membro}
-              onChange={e => setMembro(e.target.value)}
-              placeholder="Membros da Equipe"/>
+                  membrosProjeto.splice(i, 1); 
+                }
+            
+            }
+            } else {
+              membrosProjeto.push(membrolist.nome)
+            }
+            
+            setMembrosProjeto(membrosProjeto)}} id={membrolist.id} name={membrolist.nome} value={membrolist.name} />{membrolist.nome}</div>))
+        }
               
         <button className="button" type="submit">Cadastrar</button>
         </form>

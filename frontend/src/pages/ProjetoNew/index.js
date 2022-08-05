@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
 import { Link , useHistory } from "react-router-dom"
@@ -14,12 +14,26 @@ export default function ProjetoNew() {
   const [gastos, setGastos] = useState("") 
   const [lucro, setLucro] = useState("") 
   const [equipe,setEquipe] = useState("") 
+  const [listEquipes, setlistEquipes] = useState([]);
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
 
+  useEffect(() => {
+    api
+      .get("/profile/equipe", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+      console.log(response.data)
+        setlistEquipes(response.data);
+      });
+  }, [empresaId]);
+
   async function newProjeto(e){
     e.preventDefault()
-
+    
     const data = {
       nome,
       dataI,
@@ -83,10 +97,12 @@ export default function ProjetoNew() {
               value={lucro}
               onChange={e => setLucro(e.target.value)}
               placeholder="lucro"/>
-              <input 
-              value={equipe}
-              onChange={e => setEquipe(e.target.value)}
-              placeholder="Nome da equipe responsável pelo projeto"/>
+              <select value={equipe.id} onChange={(e) => setEquipe(e.target.value)}>
+              <option value="">Selecione a Equipa</option>
+              { 
+              listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
+              }
+              </select>
         <button className="button" type="submit">Criar Projeto</button>
         </form>
       </div>

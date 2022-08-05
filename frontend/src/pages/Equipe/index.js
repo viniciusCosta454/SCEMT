@@ -27,6 +27,7 @@ export default function Equipe() {
         }
       })
       .then(response => {
+        console.log(response.data)
         setEquipes(response.data);
       });
   }, [empresaId]);
@@ -38,7 +39,7 @@ export default function Equipe() {
               Authorization: empresaId
             }
           })
-
+          
           setEquipes(Equipes.filter(Equipe => Equipe.id !== id))
 
       } catch (erro) {
