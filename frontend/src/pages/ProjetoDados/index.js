@@ -17,7 +17,7 @@ export default function Projeto() {
 
   const empresaName = localStorage.getItem("nomeEmpresa");
   const empresaId = localStorage.getItem("empresaId");
-
+  const projetoId = localStorage.getItem("idProjeto");
 
   useEffect(() => {
     api
@@ -55,15 +55,13 @@ export default function Projeto() {
         </button>
       </header>
         {
-          Projetos.map(Projeto => (
-          <h1>Dados do projeto {Projeto.nome}</h1>
-          ))
-        }
-        
-      <ul>
-        {
-        Projetos.map(Projeto => (
-          <li key={Projeto.id}>
+          Projetos.map((Projeto) => {
+            if (projetoId == Projeto.id){
+              return (
+                <div>
+              <h1>Dados do projeto {Projeto.nome}</h1>
+              <ul>
+              <li key={Projeto.id}>
             <strong>NOME DO PROJETO :</strong>
             <p>{Projeto.nome}</p>
             
@@ -96,9 +94,16 @@ export default function Projeto() {
             
             
           </li>
-        ))}<img src={grafico} className="grafico" alt="Graf"/>
+              </ul>
+              </div>
+              )
+            }
+          })
+        }
         
-      </ul>
+     
+        <img src={grafico} className="grafico" alt="Graf"/>
+      
       
       
     </div>
