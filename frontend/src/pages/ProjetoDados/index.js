@@ -55,8 +55,9 @@ export default function Projeto() {
         </button>
       </header>
         {
+          // eslint-disable-next-line
           Projetos.map((Projeto) => {
-            if (projetoId == Projeto.id){
+            if (projetoId === Projeto.id){
               return (
                 <div>
               <h1>Dados do projeto {Projeto.nome}</h1>

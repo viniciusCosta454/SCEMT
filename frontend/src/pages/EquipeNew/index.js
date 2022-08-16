@@ -57,7 +57,7 @@ export default function EquipeNew() {
           <img src={logoImg} className="LogoLogin" alt="SCEMT" />
           <h1>Cadastrar Nova Equipe</h1>
           <p>
-            Descreva o nome e os membros dessa equipe.
+            Escolha um nome e selecione os membros dessa equipe.
           </p>
           <Link className="back-link" to="/equipe">
             <FiArrowLeft size={16} color="#38b6ff" />
@@ -74,7 +74,7 @@ export default function EquipeNew() {
 
 
         {
-          membros.map(membrolist => ( <div> <input type="checkbox" onChange={e => { 
+          membros.map(membrolist => ( <div id='divcheckbox'> <input className='checkbox' type="checkbox" onChange={e => { 
 
             if (membrosProjeto.includes( membrolist.nome) ) {
               for( var i = 0; i < membrosProjeto.length; i++){ 
@@ -89,7 +89,7 @@ export default function EquipeNew() {
               membrosProjeto.push(membrolist.nome)
             }
             
-            setMembrosProjeto(membrosProjeto)}} id={membrolist.id} name={membrolist.nome} value={membrolist.name} />{membrolist.nome}</div>))
+            setMembrosProjeto(membrosProjeto)}} id={membrolist.id} name={membrolist.nome} value={membrolist.name} /><h1 id='name'>{membrolist.nome}</h1></div>))
         }
               
         <button className="button" type="submit">Cadastrar</button>
