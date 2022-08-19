@@ -8,11 +8,13 @@ exports.up = function(knex) {
         table.string("salario").notNullable()
         table.string("gastos").notNullable()
         table.string("lucro").notNullable()
-        table.string("equipe").notNullable()
+
+        table.string("equipe_id").notNullable()
 
         table.string("empresa_id").notNullable()
 
         table.foreign("empresa_id").references("id").inTable("Empresas")
+        table.foreign("equipe_id").references("id").inTable("Equipe")
     })
 };
 

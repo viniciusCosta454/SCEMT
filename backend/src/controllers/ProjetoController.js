@@ -10,6 +10,7 @@ module.exports = {
 
         const Projeto = await connection("Projeto")
         .join("Empresas","Empresas.id","=","Projeto.empresa_id")
+        //.join("Equipe","Equipe.id","=","Projeto.equipe_id")
         .limit(5)
         .offset((page-1)*5)
         .select([
@@ -18,14 +19,15 @@ module.exports = {
             "Empresas.numero",
             "Empresas.city",
             "Empresas.uf",
+            "Equipe.nome",
         ])
-    
+        
         response.header("X-Total-Count",count['count(*)'])
         return response.json(Projeto)
     },
 
     async create(request,response) {
-        const {nome, dataI,dataF,salario,gastos,lucro,equipe } = request.body
+        const {nome, dataI,dataF,salario,gastos,lucro,equipe_id } = request.body
         const empresa_id = request.headers.authorization
 
         const [id] = await connection("Projeto").insert({
@@ -35,7 +37,7 @@ module.exports = {
             salario,
             gastos,
             lucro,
-            equipe,
+            equipe_id,
             empresa_id
         })
 
@@ -59,11 +61,11 @@ module.exports = {
     },
     async edit(request, response) {
         const { id } = request.params
-        const { salario ,gastos, lucro, equipe} = request.body
+        const { salario ,gastos, lucro, equipe_id} = request.body
     
         await connection('Projeto')
           .where('id', id)
-          .update({salario ,gastos, lucro, equipe })
+          .update({salario ,gastos, lucro, equipe_id })
     
         return response.status(204).send()
       }

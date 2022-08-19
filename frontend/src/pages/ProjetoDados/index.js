@@ -47,8 +47,9 @@ export default function Projeto() {
         <img src={logoImg} alt="SCEMT" />
         <span>Bem vindo, {empresaName}</span>
         
-        <Link className="button" to="/home">
-          Gereciador
+        
+        <Link className="button" to="/projetos">
+          Outros projetos
         </Link>
         <button onClick={handleLogout} type="button">
           <FiPower size={18} color="#38b6ff"></FiPower>
@@ -57,7 +58,8 @@ export default function Projeto() {
         {
           // eslint-disable-next-line
           Projetos.map((Projeto) => {
-            if (projetoId === Projeto.id){
+            // eslint-disable-next-line
+            if (projetoId == Projeto.id){
               return (
                 <div>
               <h1>Dados do projeto {Projeto.nome}</h1>

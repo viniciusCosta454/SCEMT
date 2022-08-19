@@ -27,9 +27,11 @@ export default function Projeto() {
         }
       })
       .then(response => {
+        console.log('Teste', response.data)
         setProjetos(response.data);
       });
   }, [empresaId]);
+  
 
   async function handleDeleteProd(id){
       try {
@@ -78,6 +80,7 @@ export default function Projeto() {
             
             <strong>EQUIPE RESPONSÁVEL :</strong>
             <p>{Projeto.equipe}</p>
+
             <Link onClick={()=>salvar(Projeto.id)} className="button" to="/projetoDados">
              Acessar dados do projeto
             </Link>

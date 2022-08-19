@@ -13,7 +13,7 @@ export default function ProjetoNew() {
   const [salario,setSalario] = useState("") 
   const [gastos, setGastos] = useState("") 
   const [lucro, setLucro] = useState("") 
-  const [equipe,setEquipe] = useState("") 
+  const [equipe_id,setEquipe] = useState("") 
   const [listEquipes, setlistEquipes] = useState([]);
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
@@ -41,7 +41,7 @@ export default function ProjetoNew() {
       salario,
       gastos,
       lucro,
-      equipe
+      equipe_id
     }
 
     try {
@@ -97,8 +97,8 @@ export default function ProjetoNew() {
               value={lucro}
               onChange={e => setLucro(e.target.value)}
               placeholder="lucro"/>
-              <select value={equipe.id} onChange={(e) => setEquipe(e.target.value)}>
-              <option value="">Selecione a Equipa</option>
+              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
+              <option value="">Selecione a Equipe</option>
               { 
               listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
               }

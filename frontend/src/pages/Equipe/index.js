@@ -82,7 +82,6 @@ export default function Equipe() {
             <strong>MEMBROS DA EQUIPE :</strong>
             <p>{Equipe.membro}</p>
 
-            <strong>COPIE OS MEMBROS ATUAIS ANTES DE EDITAR A EQUIPE</strong>
             
             <Link to="/EquipeEdit" onClick={()=>salvar(Equipe.id)} className="button2" type="button">
               <FaWhmcs size={20} color="#38b6ff"></FaWhmcs>
