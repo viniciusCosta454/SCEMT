@@ -1,7 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import  {Link,useHistory} from "react-router-dom";
 import { FiPower } from "react-icons/fi";
-import grafico from "../../assets/grafico.png"
 
 import "./style.css";
 
@@ -48,8 +47,8 @@ export default function Projeto() {
         <span>Bem vindo, {empresaName}</span>
         
         
-        <Link className="button" to="/projetos">
-          Outros projetos
+        <Link className="button" to="/sprintNew">
+          Nova Sprint
         </Link>
         <button onClick={handleLogout} type="button">
           <FiPower size={18} color="#38b6ff"></FiPower>
@@ -69,31 +68,14 @@ export default function Projeto() {
             <p>{Projeto.nome}</p>
             
             <strong>EQUIPE RESPONSÁVEL :</strong>
-            <p>{Projeto.equipe}</p>
+            <p>{Projeto.equipe_nome}</p>
 
-            <strong>DATA INICIAL DA SPRINT :</strong>
+            <strong>DATA INICIAL DO PROJETO :</strong>
             <p>{Projeto.dataI}</p>
 
-            <strong>DATA FINAL DA SPRINT :</strong>
+            <strong>DATA FINAL DO PROJETO :</strong>
             <p>{Projeto.dataF}</p>
 
-            <strong>SALÁRIO DA EQUIPE :</strong>
-            <p>{Intl.NumberFormat("py-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(Projeto.salario)}</p>
-
-            <strong>GASTOS GERAIS :</strong>
-            <p>{Intl.NumberFormat("py-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(Projeto.gastos)}</p>
-
-            <strong>LUCRO ATUAL :</strong>
-            <p>{Intl.NumberFormat("py-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(Projeto.lucro)}</p>
             
             
           </li>
@@ -103,9 +85,7 @@ export default function Projeto() {
             }
           })
         }
-        
-     
-        <img src={grafico} className="grafico" alt="Graf"/>
+
       
       
       

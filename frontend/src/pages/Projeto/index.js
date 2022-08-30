@@ -1,7 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import  {Link,useHistory} from "react-router-dom";
 import { FiPower, FiTrash2 } from "react-icons/fi";
-import { FaWhmcs } from "react-icons/fa"
 
 import "./style.css";
 
@@ -27,7 +26,7 @@ export default function Projeto() {
         }
       })
       .then(response => {
-        console.log('Teste', response.data)
+        console.log(response.data)
         setProjetos(response.data);
       });
   }, [empresaId]);
@@ -79,16 +78,14 @@ export default function Projeto() {
             <p>{Projeto.nome}</p>
             
             <strong>EQUIPE RESPONSÁVEL :</strong>
-            <p>{Projeto.equipe}</p>
+            <p>{Projeto.equipe_nome}</p>
 
             <Link onClick={()=>salvar(Projeto.id)} className="button" to="/projetoDados">
              Acessar dados do projeto
             </Link>
 
             
-            <Link to="/ProjetoEdit" onClick={()=>salvar(Projeto.id)} className="button2" type="button">
-              <FaWhmcs size={20} color="#38b6ff"></FaWhmcs>
-            </Link>
+            
             <button onClick={()=>handleDeleteProd(Projeto.id)} type="button">
               <FiTrash2 size={20} color="#38b6ff"></FiTrash2>
             </button>

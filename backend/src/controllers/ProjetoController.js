@@ -10,7 +10,6 @@ module.exports = {
 
         const Projeto = await connection("Projeto")
         .join("Empresas","Empresas.id","=","Projeto.empresa_id")
-        //.join("Equipe","Equipe.id","=","Projeto.equipe_id")
         .limit(5)
         .offset((page-1)*5)
         .select([
@@ -27,16 +26,13 @@ module.exports = {
     },
 
     async create(request,response) {
-        const {nome, dataI,dataF,salario,gastos,lucro,equipe_id } = request.body
+        const {nome, dataI,dataF,equipe_id } = request.body
         const empresa_id = request.headers.authorization
 
         const [id] = await connection("Projeto").insert({
             nome,
             dataI,
             dataF,
-            salario,
-            gastos,
-            lucro,
             equipe_id,
             empresa_id
         })
@@ -58,16 +54,6 @@ module.exports = {
         await connection("Projeto").where("id",id).delete()
 
         return response.status(204).send()
-    },
-    async edit(request, response) {
-        const { id } = request.params
-        const { salario ,gastos, lucro, equipe_id} = request.body
-    
-        await connection('Projeto')
-          .where('id', id)
-          .update({salario ,gastos, lucro, equipe_id })
-    
-        return response.status(204).send()
-      }
+    }
     
 }

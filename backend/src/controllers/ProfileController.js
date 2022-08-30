@@ -30,7 +30,7 @@ module.exports = {
 
         const empresa_id = request.headers.authorization
 
-        const projeto = await connection("Projeto").where("Projeto.empresa_id", empresa_id).join("Equipe","Equipe.id","=","Projeto.equipe_id").select(["Projeto.*","Equipe.nome"])
+        const projeto = await connection("Projeto").where("Projeto.empresa_id", empresa_id).join("Equipe","Equipe.id","=","Projeto.equipe_id").select(["Projeto.*","Equipe.nome as equipe_nome"])
         //const projeto = await connection("Projeto").where("empresa_id", empresa_id).select("*")
         
         

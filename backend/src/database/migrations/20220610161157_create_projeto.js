@@ -5,9 +5,6 @@ exports.up = function(knex) {
         table.string("nome").notNullable()
         table.string("dataI").notNullable()
         table.string("dataF").notNullable()
-        table.string("salario").notNullable()
-        table.string("gastos").notNullable()
-        table.string("lucro").notNullable()
 
         table.string("equipe_id").notNullable()
 

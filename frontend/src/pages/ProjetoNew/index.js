@@ -10,9 +10,6 @@ export default function ProjetoNew() {
   const [nome, setNome] = useState("")
   const [dataI, setDataI] = useState("")
   const [dataF, setDataF] = useState("")  
-  const [salario,setSalario] = useState("") 
-  const [gastos, setGastos] = useState("") 
-  const [lucro, setLucro] = useState("") 
   const [equipe_id,setEquipe] = useState("") 
   const [listEquipes, setlistEquipes] = useState([]);
   const history = useHistory()
@@ -38,9 +35,6 @@ export default function ProjetoNew() {
       nome,
       dataI,
       dataF,
-      salario,
-      gastos,
-      lucro,
       equipe_id
     }
 
@@ -80,23 +74,12 @@ export default function ProjetoNew() {
             <input 
               value={dataI}
               onChange={e => setDataI((mask(unMask(e.target.value),['99/99/9999'])))}
-              placeholder="Data Inicial da Sprint"/>
+              placeholder="Data Inicial do Projeto"/>
             <input 
               value={dataF}
               onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-              placeholder="Data Final da Sprint"/>
-              <input 
-              value={salario}
-              onChange={e => setSalario(e.target.value)}
-              placeholder="Custo de salários"/>
-              <input 
-              value={gastos}
-              onChange={e => setGastos(e.target.value)}
-              placeholder="gastos com o projeto"/>
-              <input 
-              value={lucro}
-              onChange={e => setLucro(e.target.value)}
-              placeholder="lucro"/>
+              placeholder="Data Final do Projeto"/>
+              
               <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
               <option value="">Selecione a Equipe</option>
               { 

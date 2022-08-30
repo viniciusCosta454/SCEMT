@@ -37,6 +37,5 @@ routes.put('/Equipe/:id', EquipeController.edit)
 routes.get("/Projeto",ProjetoController.index)
 routes.post("/Projeto",ProjetoController.create)
 routes.delete("/Projeto/:id",ProjetoController.delete)
-routes.put('/Projeto/:id', ProjetoController.edit)
 
 module.exports = routes
