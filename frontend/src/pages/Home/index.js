@@ -35,7 +35,7 @@ export default function Home() {
           Equipes
         </Link>
         <Link className="button" to="/membro">
-          Membros
+          Meus Funcionários
         </Link>
        
        

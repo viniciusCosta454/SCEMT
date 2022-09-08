@@ -25,14 +25,14 @@ module.exports = {
     },
 
     async create(request,response) {
-        const {nome, membro } = request.body
+        const {nome/*, membro*/ } = request.body
         const empresa_id = request.headers.authorization
 
-        console.log(membro)
+        //console.log(membro)
 
         const [id] = await connection("Equipe").insert({
             nome,
-            membro: membro.toString(),
+           // membro: membro.toString(),
             empresa_id
         })
 
@@ -53,16 +53,6 @@ module.exports = {
         await connection("Equipe").where("id",id).delete()
 
         return response.status(204).send()
-    },
-    async edit(request, response) {
-        const { id } = request.params
-        const { nome ,membro} = request.body
-    
-        await connection('Equipe')
-          .where('id', id)
-          .update({ nome , membro })
-    
-        return response.status(204).send()
-      }
+    }
     
 }

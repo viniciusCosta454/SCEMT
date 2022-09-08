@@ -20,7 +20,7 @@ export default function Projeto() {
 
   useEffect(() => {
     api
-      .get("profile/Projeto", {
+      .get("profile/projeto", {
         headers: {
           Authorization: empresaId
         }
@@ -78,18 +78,19 @@ export default function Projeto() {
             <p>{Projeto.nome}</p>
             
             <strong>EQUIPE RESPONSÁVEL :</strong>
-            <p>{Projeto.equipe_nome}</p>
+            <p>
+              {Projeto.equipe_id.map((equipe) => {
+                return `${equipe.nome} - `
+              })}
+            </p>
 
             <Link onClick={()=>salvar(Projeto.id)} className="button" to="/projetoDados">
              Acessar dados do projeto
             </Link>
-
-            
             
             <button onClick={()=>handleDeleteProd(Projeto.id)} type="button">
               <FiTrash2 size={20} color="#38b6ff"></FiTrash2>
             </button>
-            
             
           </li>
         ))}

@@ -75,9 +75,9 @@ export default function ProjetoNew() {
           <form onSubmit={newProjeto}>
             <div className='first_row'>
               <input 
-                value={nome}
-                onChange={e => setNome(e.target.value)}
-                placeholder="Vai ser um texto bem grande" />
+                value={dataF}
+                onChange={e => setDataF(e.target.value)}
+                placeholder="Vai ser " />
               <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
                 <option value="">Selec peq</option>
                 { 
@@ -117,7 +117,7 @@ export default function ProjetoNew() {
                 onChange={e => setNome(e.target.value)}
                 placeholder="Vai ser um texto bem grande" />
               <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-                <option value="">Selec peq</option>
+                <option value="">Sel</option>
                 { 
                 listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
                 }

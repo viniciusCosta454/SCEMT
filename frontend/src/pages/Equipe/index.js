@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from "react";
 import  {Link,useHistory} from "react-router-dom";
 import { FiPower, FiTrash2 } from "react-icons/fi";
-import { FaWhmcs } from "react-icons/fa"
+//import { FaWhmcs } from "react-icons/fa"
 
 import "./style.css";
 
@@ -12,6 +12,7 @@ import api from "../../services/api";
 export default function Equipe() {
 
   const [Equipes, setEquipes] = useState([]);
+  const [Membros, setMembros] = useState([]);
 
   const history = useHistory()
 
@@ -21,14 +22,15 @@ export default function Equipe() {
 
   useEffect(() => {
     api
-      .get("profile/Equipe", {
+      .get("profile/listagem_equipes", {
         headers: {
           Authorization: empresaId
         }
       })
       .then(response => {
         console.log(response.data)
-        setEquipes(response.data);
+        setEquipes(response.data.equipe); 
+        setMembros(response.data.membros);
       });
   }, [empresaId]);
 
@@ -52,9 +54,11 @@ export default function Equipe() {
       localStorage.clear()
     history.push('/')
   }
-  function salvar(id){
+ /* function salvar(id){
     localStorage.setItem('idClie', id);
-  }
+  }*/
+
+
   return (
     <div className="profile-container">
       <header>
@@ -80,12 +84,15 @@ export default function Equipe() {
             <p>{Equipe.nome}</p>
             
             <strong>MEMBROS DA EQUIPE :</strong>
-            <p>{Equipe.membro}</p>
+            <p>{Membros.map((membro) => {
+              if (membro.equipe_id === String(Equipe.id)) {
+                return `${membro.nome}, `
+              }
+              return ''
+            })}</p>
 
             
-            <Link to="/EquipeEdit" onClick={()=>salvar(Equipe.id)} className="button2" type="button">
-              <FaWhmcs size={20} color="#38b6ff"></FaWhmcs>
-            </Link>
+            
             <button onClick={()=>handleDeleteProd(Equipe.id)} type="button">
               <FiTrash2 size={20} color="#38b6ff"></FiTrash2>
             </button>

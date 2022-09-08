@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
 import { Link , useHistory } from "react-router-dom"
@@ -14,8 +14,24 @@ export default function MembroNew() {
   const [email,setEmail] = useState("") 
   const [sexo,setSexo] = useState("") 
   const [nacimento,setNacimento] = useState("") 
+  const [equipe_id,setEquipe] = useState("") 
+  const [listEquipes, setlistEquipes] = useState([]);
+  
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
+
+  useEffect(() => {
+    api
+      .get("/profile/equipe", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+      console.log(response.data)
+        setlistEquipes(response.data);
+      });
+  }, [empresaId]);
 
   async function newMembro(e){
     e.preventDefault()
@@ -27,7 +43,8 @@ export default function MembroNew() {
       endereco,
       email,
       sexo,
-      nacimento
+      nacimento,
+      equipe_id
     }
 
     try {
@@ -87,6 +104,14 @@ export default function MembroNew() {
               value={nacimento}
               onChange={e => setNacimento((mask(unMask(e.target.value),['99/99/9999'])))}
               placeholder="Data de Nascimento"/>
+
+              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
+              <option value="">Selecione a Equipe</option>
+              { 
+              listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
+              }
+              </select>
+
         <button className="button" type="submit">Cadastrar</button>
         </form>
       </div>

@@ -10,10 +10,16 @@ export default function ProjetoNew() {
   const [nome, setNome] = useState("")
   const [dataI, setDataI] = useState("")
   const [dataF, setDataF] = useState("")  
-  const [equipe_id,setEquipe] = useState("") 
-  const [listEquipes, setlistEquipes] = useState([]);
+  
+
+  const [equipesProjeto,setequipesProjeto] = useState([])
+  const [equipes,setEquipes] = useState([])
+
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
+
+  
+
 
   useEffect(() => {
     api
@@ -23,10 +29,12 @@ export default function ProjetoNew() {
         }
       })
       .then(response => {
-      console.log(response.data)
-        setlistEquipes(response.data);
+        
+        setEquipes(response.data);
       });
   }, [empresaId]);
+
+  
 
   async function newProjeto(e){
     e.preventDefault()
@@ -35,8 +43,10 @@ export default function ProjetoNew() {
       nome,
       dataI,
       dataF,
-      equipe_id
+      equipe_id:equipesProjeto
     }
+
+    console.log('data', data)
 
     try {
       await api.post("Projeto",data,{
@@ -59,7 +69,8 @@ export default function ProjetoNew() {
           <img src={logoImg} className="LogoLogin" alt="SCEMT" />
           <h1>Cadastrar Novo Projeto</h1>
           <p>
-            Preencha os campos solicitados com as informações do seu projeto.
+            Preencha os campos solicitados com as informações do seu projeto e selecione as equipes
+            que fazem parte dele.
           </p>
           <Link className="back-link" to="/projetos">
             <FiArrowLeft size={16} color="#38b6ff" />
@@ -80,12 +91,29 @@ export default function ProjetoNew() {
               onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
               placeholder="Data Final do Projeto"/>
               
-              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-              <option value="">Selecione a Equipe</option>
-              { 
-              listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
+
+              
+              {
+                
+          equipes.map(equipelist => ( <div id='divcheckbox'> <input className='checkbox' type="checkbox" onChange={e => { 
+
+            if (equipesProjeto.includes( equipelist.nome) ) {
+              for( var i = 0; i < equipesProjeto.length; i++){ 
+    
+                if ( equipesProjeto[i] === equipelist.nome) { 
+            
+                  equipesProjeto.splice(i, 1); 
+                }
+            
+            }
+            } else {
+              equipesProjeto.push(equipelist.id)
+            }
+            
+            setequipesProjeto(equipesProjeto)}} id={equipelist.id} name={equipelist.nome} value={equipelist.nome} /><h1 id='name'>{equipelist.nome}</h1></div>))
+            
               }
-              </select>
+              
         <button className="button" type="submit">Criar Projeto</button>
         </form>
       </div>

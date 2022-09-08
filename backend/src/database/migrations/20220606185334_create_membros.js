@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.string("email").notNullable()
         table.string("sexo").notNullable()
         table.string("nacimento").notNullable()
+        table.string("equipe_id").notNullable()
 
         table.string("empresa_id").notNullable()
 

@@ -1,7 +1,7 @@
 import React,{ useState, useEffect } from "react";
 import  {Link,useHistory} from "react-router-dom";
 import { FiPower, FiTrash2 } from "react-icons/fi";
-import { FaWhmcs } from "react-icons/fa"
+//import { FaWhmcs } from "react-icons/fa"
 
 import "./style.css";
 
@@ -63,7 +63,7 @@ export default function Membro() {
           Menu
         </Link>
         <Link className="button" to="/membroNew">
-          Cadastrar Novo Membro
+          Cadastrar Novo Membro 
         </Link>
         <button onClick={handleLogout} type="button">
           <FiPower size={18} color="#38b6ff"></FiPower>
@@ -89,12 +89,18 @@ export default function Membro() {
             <p>{Membro.sexo}</p>
             <strong>NASCIMENTO DO MEMBRO :</strong>
             <p>{Membro.nacimento}</p>
-            <Link to="/MembroEdit" onClick={()=>salvar(Membro.id)} className="button2" type="button">
-              <FaWhmcs size={20} color="#38b6ff"></FaWhmcs>
-            </Link>
+            <strong>MEMBRO DA EQUIPE : </strong>
+            <p>{Membro.equipe_nome}</p>
+            
+            
+           
             <button onClick={()=>handleDeleteProd(Membro.id)} type="button">
               <FiTrash2 size={20} color="#38b6ff"></FiTrash2>
             </button>
+
+            <Link onClick={()=>salvar(Membro.id)} className="button" to="/EquipeEdit">
+             Alterar Equipe
+            </Link>
             
             
           </li>

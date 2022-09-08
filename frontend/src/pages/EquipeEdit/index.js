@@ -1,31 +1,51 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
 import { Link ,  useHistory  } from "react-router-dom"
 import {FiArrowLeft} from "react-icons/fi"
+//import { mask , unMask } from "remask"
 
 import api from "../../services/api"
 
 export default function EquipeEdit() {
   
   
-  const [membro, setMembro] = useState("") 
+  const [equipe_id, setEquipe] = useState("")
+  const [listEquipes, setlistEquipes] = useState([]);
+
   const history = useHistory()
+  const empresaId = localStorage.getItem("empresaId");
+
   const idClie = localStorage.getItem("idClie");
 
-  async function edt(e){
+
+  useEffect(() => {
+    api
+      .get("/profile/equipe", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+      console.log(response.data)
+        setlistEquipes(response.data);
+      });
+  }, [empresaId]);
+
+
+  async function edit(e){
     e.preventDefault()
 
     const data = {
-        membro
+        equipe_id
     }
 
     try {
-      await api.put(`Equipe/${idClie}`,data)
+      await api.put(`Membro/${idClie}`,data)
 
-      history.push("/Equipe")
+      history.push("/Membro")
     } catch (error) {
-      alert("Erro ao Editar Equipe")
+      alert("Erro ao Editar Membro")
     }
 
   }
@@ -35,21 +55,23 @@ export default function EquipeEdit() {
       <div className="conteiner">
         <section>
           <img src={logoImg} className="LogoLogin" alt="SCEMT" />
-          <h1>Editar Equipe</h1>
+          <h1>Alterar Equipe do Membro</h1>
           <p>
-            Edite a Equipe e mude suas informaçoes.
+            Mude qual equipe que o membro atual pertence
           </p>
-          <Link className="back-link" to="/Equipe">
+          <Link className="back-link" to="/Membro">
             <FiArrowLeft size={16} color="#38b6ff" />
             Voltar para Home
           </Link>
         </section>
-        <form onSubmit={edt}>
-        
-            <input 
-            value={membro}
-            onChange={e => setMembro(e.target.value)}
-              placeholder="Novo Membro"/>
+        <form onSubmit={edit}>
+
+        <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
+              <option value="">Selecione a Equipe</option>
+              { 
+              listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
+              }
+              </select>
 
         <button className="button" type="submit">Editar</button>
         </form>

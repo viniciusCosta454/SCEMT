@@ -20,17 +20,16 @@ export default function Projeto() {
 
   useEffect(() => {
     api
-      .get("profile/Projeto", {
+      .get("profile/projeto", {
         headers: {
           Authorization: empresaId
         }
       })
       .then(response => {
+        console.log(response.data)
         setProjetos(response.data);
       });
   }, [empresaId]);
-
-
 
   function handleLogout(){
 
@@ -68,7 +67,11 @@ export default function Projeto() {
             <p>{Projeto.nome}</p>
             
             <strong>EQUIPE RESPONSÁVEL :</strong>
-            <p>{Projeto.equipe_nome}</p>
+            <p>
+              {Projeto.equipe_id.map((equipe) => {
+                return `${equipe.nome} - `
+              })}
+            </p>
 
             <strong>DATA INICIAL DO PROJETO :</strong>
             <p>{Projeto.dataI}</p>

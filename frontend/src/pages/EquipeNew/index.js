@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, /*useEffect*/ } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
 import { Link , useHistory } from "react-router-dom"
@@ -7,15 +7,15 @@ import api from "../../services/api"
 
 export default function EquipeNew() {
   const [nome, setNome] = useState("")
-  const [membrosProjeto,setMembrosProjeto] = useState([])
-  const [membros,setMembros] = useState([])
+  //const [membrosProjeto,setMembrosProjeto] = useState([])
+  //const [membros,setMembros] = useState([])
   
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
   
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     api
       .get("/profile/membro", {
         headers: {
@@ -26,13 +26,13 @@ export default function EquipeNew() {
         
         setMembros(response.data);
       });
-  }, [empresaId]);
+  }, [empresaId]);*/
   async function newEquipe(e){
     e.preventDefault()
 
     const data = {
       nome,
-      membro:membrosProjeto
+      //membro:membrosProjeto
     }
 
 
@@ -73,7 +73,7 @@ export default function EquipeNew() {
          
 
 
-        {
+       {/*
           membros.map(membrolist => ( <div id='divcheckbox'> <input className='checkbox' type="checkbox" onChange={e => { 
 
             if (membrosProjeto.includes( membrolist.nome) ) {
@@ -90,6 +90,7 @@ export default function EquipeNew() {
             }
             
             setMembrosProjeto(membrosProjeto)}} id={membrolist.id} name={membrolist.nome} value={membrolist.name} /><h1 id='name'>{membrolist.nome}</h1></div>))
+            */
         }
               
         <button className="button" type="submit">Cadastrar</button>
