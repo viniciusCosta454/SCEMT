@@ -8,6 +8,7 @@ const PdfController = require("./controllers/PdfController")
 const MembroController = require("./controllers/MembroController")
 const EquipeController = require("./controllers/EquipeController")
 const ProjetoController = require("./controllers/ProjetoController")
+const SprintController = require("./controllers/SprintController")
 
 const routes = express.Router()
 
@@ -37,5 +38,9 @@ routes.delete("/Equipe/:id",EquipeController.delete)
 routes.get("/Projeto",ProjetoController.index)
 routes.post("/Projeto",ProjetoController.create)
 routes.delete("/Projeto/:id",ProjetoController.delete)
+
+routes.get("/Sprint",SprintController.index)
+routes.post("/Sprint",SprintController.create)
+//routes.delete("/Sprint/:id",SprintController.delete)
 
 module.exports = routes

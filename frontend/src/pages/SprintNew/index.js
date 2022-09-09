@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import "./style.css"
 import logoImg from "../../assets/logo.png";
-import { Link , useHistory } from "react-router-dom"
-import {FiArrowLeft} from "react-icons/fi"
+import { Link, useHistory } from "react-router-dom"
+import { FiArrowLeft } from "react-icons/fi"
 import api from "../../services/api"
 import { mask, unMask } from 'remask'
 
-export default function ProjetoNew() {
+export default function SprintNew() {
   const [nome, setNome] = useState("")
-  const [dataI, setDataI] = useState("")
-  const [dataF, setDataF] = useState("")  
-  const [equipe_id,setEquipe] = useState("") 
-  const [listEquipes, setlistEquipes] = useState([]);
+  const [tipo, setTipo] = useState("")
+  const [iPlan, setIPlan] = useState("")
+  const [tRelPlan, setTRelPlan] = useState("")
+  const [tamPlan, setTamPlan] = useState("")
+  const [itensR, setItensR] = useState("")
+  const [tamR, setTamR] = useState("")
+
+  const tRelPlanOpts = ["VS", "SM", "MD", "LG", "VL"]
+  const tipos = ["IO", "Calc", "Math", "Logic", "Visual"]
+
+
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
 
@@ -23,134 +30,160 @@ export default function ProjetoNew() {
         }
       })
       .then(response => {
-      console.log(response.data)
-        setlistEquipes(response.data);
+        console.log(response.data)
       });
   }, [empresaId]);
 
-  async function newProjeto(e){
+  async function newSprint(e) {
     e.preventDefault()
-    
+
+    const projeto_id = localStorage.getItem("idProjeto");
+
     const data = {
-      nome,
-      dataI,
-      dataF,
-      equipe_id
+      projeto_id, nome, tipo, iPlan, tRelPlan, tamPlan, iPlan, itensR, tamR
     }
 
     try {
-      await api.post("Projeto",data,{
-        headers : {
-          Authorization : empresaId
+      await api.post("Sprint", data, {
+        headers: {
+          Authorization: empresaId
         }
       })
-
-      history.push("/projetos")
+      history.push("/projetoDados")
     } catch (error) {
-      alert("Erro ao cadastrar Projeto")
+      alert("Erro ao cadastrar Sprint: " + error)
     }
+
 
   }
 
   return (
-    <div className="new-vaga-container">
-      <div className="container">
-        <section>
-          <img src={logoImg} className="LogoLogin" alt="SCEMT" />
-          <h1>Criar nova Sprint</h1>
-          <p>
-            Preencha os campos solicitados com as informações da Sprint.
-          </p>
-          <Link className="back-link" to="/projetos">
-            <FiArrowLeft size={16} color="#38b6ff" />
-            Voltar para projetos
-          </Link>
-        </section>
-        <div className='content'>
-          <div className='form_header'>
-            <div />
-            <div>Planejado</div>
-            <div>Atual</div>
-          </div>
-          <form onSubmit={newProjeto}>
-            <div className='first_row'>
-              <input 
-                value={dataF}
-                onChange={e => setDataF(e.target.value)}
-                placeholder="Vai ser " />
-              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-                <option value="">Selec peq</option>
-                { 
-                listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
-                }
-              </select>
-              <input 
-                value={dataI}
-                className="small_input"
-                onChange={e => setDataI((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="numero"/>
-              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-                <option value="">Size</option>
-                { 
-                listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
-                }
-              </select>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="size"/>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="itens"/>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="size"/>
+    <div className="container">
+      <div className="row">
+        <div className="col-4">
+          <section>
+            <img src={logoImg} className="LogoLogin" alt="SCEMT" />
+            <h1>Criar nova Sprint</h1>
+            <p>
+              Preencha os campos solicitados com as informações da Sprint.
+            </p>
+            <Link className="back-link" to="/projetoDados">
+              <FiArrowLeft size={16} color="#38b6ff" />
+              Voltar para projetos
+            </Link>
+          </section>
+        </div>
+
+        <div className="col-8">
+          <br />
+          <div className="row">
+            <div className="col-3 text-center header">
+              Nome
             </div>
-            <div className='second_row'>
-              <input 
-                value={nome}
-                onChange={e => setNome(e.target.value)}
-                placeholder="Vai ser um texto bem grande" />
-              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-                <option value="">Sel</option>
-                { 
-                listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
-                }
-              </select>
-              <input 
-                value={dataI}
-                className="small_input"
-                onChange={e => setDataI((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="numero"/>
-              <select value={equipe_id.id} onChange={(e) => setEquipe(e.target.value)}>
-                <option value="">Size</option>
-                { 
-                listEquipes.map((e) => <option value={e.id}>{e.nome}</option>)
-                }
-              </select>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="size"/>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="itens"/>
-              <input 
-                value={dataF}
-                className="small_input"
-                onChange={e => setDataF((mask(unMask(e.target.value),['99/99/9999'])))}
-                placeholder="size"/>
+            <div className="col-2 text-center header">
+              <p>Tipo</p>
+            </div>
+            <div className="col-5">
+              <div className="row">
+                <div className="col-12 text-center header">
+                  <p>Planejado</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-4 text-center header">
+                  <p>Itens</p>
+                </div>
+                <div className="col-4 text-center header">
+                  <p>Tam. Rel.</p>
+                </div>
+                <div className="col-4 text-center header">
+                  <p>Tam.</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-2 text-center header">
+              <div className="row">
+                <div className="col-12 text-center header">
+                  <p>Real</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-6 text-center header">
+                  <p>Itens</p>
+                </div>
+                <div className="col-6 text-center header">
+                  <p>Tam.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form onSubmit={newSprint}>
+
+
+            <div className="row">
+              <div className="col-3">
+                <input
+                  value={nome}
+                  onChange={e => setNome(e.target.value)}
+                  className='form-control' />
+              </div>
+              <div className="col-2">
+                <select className='form-control' value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                  <option value="">----</option>
+                  {
+                    tipos.map((e) => <option value={e}>{e}</option>)
+                  }
+                </select>
+              </div>
+              <div className="col-5">
+                <div className="row">
+                  <div className="col-4">
+                    <input
+                      value={iPlan}
+                      onChange={e => setIPlan(e.target.value)}
+                      className='form-control' />
+                  </div>
+                  <div className="col-4">
+                    <select className='form-control' value={tRelPlan} onChange={(e) => setTRelPlan(e.target.value)}>
+                      <option value="">----</option>
+                      {
+                        tRelPlanOpts.map((e) => <option value={e}>{e}</option>)
+                      }
+                    </select>
+                  </div>
+                  <div className="col-4">
+                    <input
+                      value={tamPlan}
+                      onChange={e => setTamPlan(e.target.value)}
+                      className='form-control' />
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="row">
+                  <div className="col-6">
+                    <input
+                      value={itensR}
+                      onChange={e => setItensR(e.target.value)}
+                      className='form-control' />
+                  </div>
+                  <div className="col-6">
+                    <input
+                      value={tamR}
+                      onChange={e => setTamR(e.target.value)}
+                      className='form-control' />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-4 offset-8">
+                <button className="button" type="submit">Criar Sprint</button>
+              </div>
             </div>
           </form>
-          <button className="button" type="submit">Criar Sprint</button>
         </div>
       </div>
     </div>
