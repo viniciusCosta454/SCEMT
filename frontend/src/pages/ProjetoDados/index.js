@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import "./style.css";
 import logoImg from "../../assets/logo.png";
 import { Link, useHistory } from "react-router-dom";
@@ -8,8 +8,9 @@ import { mask, unMask } from 'remask';
 import { FiPower } from "react-icons/fi";
 
 
-function newComponente() {                   //ao invés de "export default function", pois há duas funções na mesma classe.
-  const [nome, setNome] = useState("")
+
+export function Componente() {                   //ao invés de "export DEFAULT function", pois há duas funções na mesma classe.
+  const [nome, setNome] = useState("")           // "create" ao invés de "new" tanto no front-end quanto no back-end 
   const [tipo, setTipo] = useState("")
   const [iPlan, setIPlan] = useState("")
   const [tRelPlan, setTRelPlan] = useState("")
@@ -22,7 +23,6 @@ function newComponente() {                   //ao invés de "export default func
 
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
-
 
 
   useEffect(() => { //Ambos os useEffect(s) foram concatenados em um só:
@@ -44,28 +44,9 @@ function newComponente() {                   //ao invés de "export default func
       })
       .then(response => {
         console.log(response.data)
-        setProjetos(response.data);
+        //Componente(response.data);       //!setProjetos is not defined! (Primeiro Erro apontado)
       });
   }, [empresaId]);
-
-
-
-
-  async function newComponente(e) {
-    e.preventDefault()
-    const projeto_id = localStorage.getItem("idProjeto");
-    const data = { projeto_id, nome, tipo, iPlan, tRelPlan, tamPlan, iPlan, itensR, tamR }
-    try {
-      await api.post("newComponente", data, {
-        headers: {
-          Authorization: empresaId
-        }
-      })
-      history.push("/projetoDados")
-    } catch (error) {
-      alert("Erro ao cadastrar Componente: " + error)
-    }
-  }
 }
 
 export default function Projeto() {
@@ -80,6 +61,22 @@ export default function Projeto() {
   function handleLogout() {
     localStorage.clear()
     history.push('/')
+  }
+
+  async function setComponente(e) {
+    e.preventDefault()
+    const projeto_id = localStorage.getItem("idProjeto");
+    const data = { projeto_id, nome, tipo, iPlan, tRelPlan, tamPlan, iPlan, itensR, tamR }
+    try {
+      await api.post("Componente", data, {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      history.push("/projetoDados")
+    } catch (error) {
+      alert("Erro ao cadastrar Componente: " + error)
+    }
   }
 
 
@@ -185,7 +182,7 @@ export default function Projeto() {
 
 
 
-                            <form onSubmit={newComponente}>
+                            <form onSubmit={setComponente}>
                               <div className="row">
                                 <div className="col-3">
                                   <input
