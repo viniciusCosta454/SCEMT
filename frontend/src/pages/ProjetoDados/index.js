@@ -8,7 +8,7 @@ import { mask, unMask } from 'remask';
 import { FiPower } from "react-icons/fi";
 
 
-export function Componente() {                   //ao invés de "default function"
+function newComponente() {                   //ao invés de "export default function", pois há duas funções na mesma classe.
   const [nome, setNome] = useState("")
   const [tipo, setTipo] = useState("")
   const [iPlan, setIPlan] = useState("")
@@ -23,7 +23,9 @@ export function Componente() {                   //ao invés de "default functio
   const history = useHistory()
   const empresaId = localStorage.getItem("empresaId");
 
-  useEffect(() => {
+
+
+  useEffect(() => { //Ambos os useEffect(s) foram concatenados em um só:
     api
       .get("/profile/equipe", {
         headers: {
@@ -32,15 +34,29 @@ export function Componente() {                   //ao invés de "default functio
       })
       .then(response => {
         console.log(response.data)
+      })
+
+      //Da antiga classe (new)Sprint:
+      .get("profile/projeto", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+        console.log(response.data)
+        setProjetos(response.data);
       });
   }, [empresaId]);
+
+
+
 
   async function newComponente(e) {
     e.preventDefault()
     const projeto_id = localStorage.getItem("idProjeto");
     const data = { projeto_id, nome, tipo, iPlan, tRelPlan, tamPlan, iPlan, itensR, tamR }
     try {
-      await api.post("Componente", data, {
+      await api.post("newComponente", data, {
         headers: {
           Authorization: empresaId
         }
@@ -59,19 +75,6 @@ export default function Projeto() {
   const empresaName = localStorage.getItem("nomeEmpresa");
   const empresaId = localStorage.getItem("empresaId");
   const projetoId = localStorage.getItem("idProjeto");
-
-  useEffect(() => {
-    api
-      .get("profile/projeto", {
-        headers: {
-          Authorization: empresaId
-        }
-      })
-      .then(response => {
-        console.log(response.data)
-        setProjetos(response.data);
-      });
-  }, [empresaId]);
 
 
   function handleLogout() {
@@ -182,7 +185,7 @@ export default function Projeto() {
 
 
 
-                            <form onSubmit={Componente}>
+                            <form onSubmit={newComponente}>
                               <div className="row">
                                 <div className="col-3">
                                   <input
