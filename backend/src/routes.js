@@ -36,11 +36,16 @@ routes.post("/Equipe",EquipeController.create)
 routes.delete("/Equipe/:id",EquipeController.delete)
 
 routes.get("/Projeto",ProjetoController.index)
-routes.post("/Projeto",ProjetoController.create)
-routes.delete("/Projeto/:id",ProjetoController.delete)
+routes.get("/Projeto",ProjetoController.indexComponente)
 
-routes.get("/Sprint",SprintController.index)
-routes.post("/Sprint",SprintController.create)
+routes.post("/Projeto",ProjetoController.create)
+routes.post("/Projeto",ProjetoController.createComponente)
+
+routes.delete("/Projeto/:id",ProjetoController.delete)
+//routes.delete("/Projeto/:id",ProjetoController.deleteComponente)
+
+//routes.get("/Sprint",SprintController.index)
+//routes.post("/Sprint",SprintController.create)
 //routes.delete("/Sprint/:id",SprintController.delete)
 
 module.exports = routes

@@ -8,7 +8,7 @@ import { mask, unMask } from 'remask';
 import { FiPower } from "react-icons/fi";
 
 
-export default function ComponenteNew() {                   //ao invés de "default function"
+export function Componente() {                   //ao invés de "default function"
   const [nome, setNome] = useState("")
   const [tipo, setTipo] = useState("")
   const [iPlan, setIPlan] = useState("")
@@ -182,7 +182,7 @@ export default function Projeto() {
 
 
 
-                            <form onSubmit={newComponente}>
+                            <form onSubmit={Componente}>
                               <div className="row">
                                 <div className="col-3">
                                   <input
