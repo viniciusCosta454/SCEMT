@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable("Sprint",function (table) {
+    return knex.schema.createTable("Componente",function (table) {
         table.increments()
         table.string("nome").notNullable()
         table.string("tipo").notNullable()
@@ -16,5 +16,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTable("Sprint")
+    return knex.schema.dropTable("Componente")
 };

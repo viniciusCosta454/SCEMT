@@ -1,35 +1,64 @@
 import React, { useState, useEffect } from "react";
+import "./style.css";
+import logoImg from "../../assets/logo.png";
 import { Link, useHistory } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
+import api from "../../services/api";
+import { mask, unMask } from 'remask';
 import { FiPower } from "react-icons/fi";
 
-import "./style.css";
 
-import logoImg from "../../assets/logo.png"
+export default function ComponenteNew() {                   //ao invés de "default function"
+  const [nome, setNome] = useState("")
+  const [tipo, setTipo] = useState("")
+  const [iPlan, setIPlan] = useState("")
+  const [tRelPlan, setTRelPlan] = useState("")
+  const [tamPlan, setTamPlan] = useState("")
+  const [itensR, setItensR] = useState("")
+  const [tamR, setTamR] = useState("")
 
-import api from "../../services/api";
-import SprintNew from "../SprintNew";
+  const tRelPlanOpts = ["VS", "SM", "MD", "LG", "VL"]
+  const tipos = ["IO", "Calc", "Math", "Logic", "Visual"]
+
+  const history = useHistory()
+  const empresaId = localStorage.getItem("empresaId");
+
+  useEffect(() => {
+    api
+      .get("/profile/equipe", {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      .then(response => {
+        console.log(response.data)
+      });
+  }, [empresaId]);
+
+  async function newComponente(e) {
+    e.preventDefault()
+    const projeto_id = localStorage.getItem("idProjeto");
+    const data = { projeto_id, nome, tipo, iPlan, tRelPlan, tamPlan, iPlan, itensR, tamR }
+    try {
+      await api.post("Componente", data, {
+        headers: {
+          Authorization: empresaId
+        }
+      })
+      history.push("/projetoDados")
+    } catch (error) {
+      alert("Erro ao cadastrar Componente: " + error)
+    }
+  }
+}
 
 export default function Projeto() {
 
   const [Projetos, setProjetos] = useState([]);
-
   const history = useHistory()
-
   const empresaName = localStorage.getItem("nomeEmpresa");
   const empresaId = localStorage.getItem("empresaId");
   const projetoId = localStorage.getItem("idProjeto");
-
-
-
-  // Dados dos componentes de cada sprint, por ora 1 sprint equivale a 1 componente: Justificar no artigo o porque!
-  const nomeComponente = localStorage.getItem("nome");
-  const tipoComponente = localStorage.getItem("tipo");
-  const iPlanComponente = localStorage.getItem("iPlan");
-  const tRelPlanComponente = localStorage.getItem("tRelPlan");
-  const tamPlanComponente = localStorage.getItem("tamPlan");
-  const itensRComponente = localStorage.getItem("itensR");
-  const tamRComponente = localStorage.getItem("tamR");
-
 
   useEffect(() => {
     api
@@ -44,12 +73,11 @@ export default function Projeto() {
       });
   }, [empresaId]);
 
-  function handleLogout() {
 
+  function handleLogout() {
     localStorage.clear()
     history.push('/')
   }
-
 
 
   return (
@@ -57,19 +85,12 @@ export default function Projeto() {
       <header>
         <img src={logoImg} alt="SCEMT" />
         <span>Bem vindo, {empresaName}</span>
-
-
-        <Link className="button" to="/sprintNew">
-          Nova Sprint
-        </Link>
         <button onClick={handleLogout} type="button">
           <FiPower size={18} color="#38b6ff"></FiPower>
         </button>
       </header>
       {
-        // eslint-disable-next-line
         Projetos.map((Projeto) => {
-          // eslint-disable-next-line
           if (projetoId == Projeto.id) {
             return (
               <div>
@@ -85,17 +106,144 @@ export default function Projeto() {
                         <strong>EQUIPE RESPONSÁVEL :</strong>
                         <p>
                           {Projeto.equipe_id.map((equipe) => {
-                            return `${equipe.nome} - `
+                            return `${equipe.nome} - `;
                           })}
                         </p>
-
                         <strong>DATA INICIAL DO PROJETO :</strong>
                         <p>{Projeto.dataI}</p>
-
                         <strong>DATA FINAL DO PROJETO :</strong>
                         <p>{Projeto.dataF}</p>
                       </li>
                     </ul>
+                  </div>
+                </div>
+
+
+                <div className="row">
+                  <div className="col-6">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-4">
+                          <section>
+                            <img src={logoImg} className="LogoLogin" alt="SCEMT" />
+                            <h1>Registrar novos Componentes</h1>
+                            <p>
+                              Preencha os campos solicitados com as informações dos Componentes.
+                            </p>
+                            <Link className="back-link" to="/projetoDados">
+                              <FiArrowLeft size={16} color="#38b6ff" />
+                              Voltar para projetos
+                            </Link>
+                          </section>
+                        </div>
+
+                        <div className="col-8">
+                          <br />
+                          <div className="row">
+                            <div className="col-3 text-center header">
+                              Nome
+                            </div>
+                            <div className="col-2 text-center header">
+                              <p>Tipo</p>
+                            </div>
+                            <div className="col-5">
+                              <div className="row">
+                                <div className="col-12 text-center header">
+                                  <p>Planejado</p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-4 text-center header">
+                                  <p>Itens</p>
+                                </div>
+                                <div className="col-4 text-center header">
+                                  <p>Tam. Rel.</p>
+                                </div>
+                                <div className="col-4 text-center header">
+                                  <p>Tam.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-2 text-center header">
+                              <div className="row">
+                                <div className="col-12 text-center header">
+                                  <p>Real</p>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-6 text-center header">
+                                  <p>Itens</p>
+                                </div>
+                                <div className="col-6 text-center header">
+                                  <p>Tam.</p>
+                                </div>
+                              </div>
+                            </div>
+
+
+
+                            <form onSubmit={newComponente}>
+                              <div className="row">
+                                <div className="col-3">
+                                  <input
+                                    value={nome}
+                                    onChange={e => setNome(e.target.value)}
+                                    className='form-control' />
+                                </div>
+                                <div className="col-2">
+                                  <select className='form-control' value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                                    <option value="">----</option>
+                                    {
+                                      tipos.map((e) => <option value={e}>{e}</option>)
+                                    }
+                                  </select>
+                                </div>
+                                <div className="col-5">
+                                  <div className="row">
+                                    <div className="col-4">
+                                      <input
+                                        value={iPlan}
+                                        onChange={e => setIPlan(e.target.value)}
+                                        className='form-control' />
+                                    </div>
+                                    <div className="col-4">
+                                      <select className='form-control' value={tRelPlan} onChange={(e) => setTRelPlan(e.target.value)}>
+                                        <option value="">----</option>
+                                        {
+                                          tRelPlanOpts.map((e) => <option value={e}>{e}</option>)
+                                        }
+                                      </select>
+                                    </div>
+                                    <div className="col-4">
+                                      <input
+                                        value={tamPlan}
+                                        onChange={e => setTamPlan(e.target.value)}
+                                        className='form-control' />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-2">
+                                  <div className="row">
+                                    <div className="col-6">
+                                      <input
+                                        value={itensR}
+                                        onChange={e => setItensR(e.target.value)}
+                                        className='form-control' />
+                                    </div>
+                                    <div className="col-6">
+                                      <input
+                                        value={tamR}
+                                        onChange={e => setTamR(e.target.value)}
+                                        className='form-control' />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -105,46 +253,3 @@ export default function Projeto() {
     </div>
   )
 }
-
-
-
-return (
-        for (let index = 0; index < SprintNew.length; index++) {
-  SprintNew.map((Componente) => {
-    return (
-      <div className="col-6">
-        <div className="row">
-          <div className="col-3 text-center header">
-            <p className="dadosSprint">Sprint.map(())</p>
-          </div>
-          <div className="col-2 text-center header">
-            <p className="dadosSprint">Sprint.map[id].tipo</p>
-          </div>
-          <div className="col-5">
-            <div className="row">
-              <div className="col-4 text-center header">
-                <p className="dadosSprint">Sprint.map[id].itensPlanejados</p>
-              </div>
-              <div className="col-4 text-center header">
-                <p className="dadosSprint">Sprint.map[id].tamanhoRelativoPlanejado</p>
-              </div>
-              <div className="col-4 text-center header">
-                <p className="dadosSprint">Sprint.map[id].tamanhoPlanejado</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-2 text-center header">
-            <div className="row">
-              <div className="col-6 text-center header">
-                <p className="dadosSprint">Sprint.map[id].itensReal</p>
-              </div>
-              <div className="col-6 text-center header">
-                <p className="dadosSprint">Sprint.map[id].tamanhoReal</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-    })

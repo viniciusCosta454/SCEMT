@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import "./style.css"
+import "./style.css";
 import logoImg from "../../assets/logo.png";
-import { Link, useHistory } from "react-router-dom"
-import { FiArrowLeft } from "react-icons/fi"
-import api from "../../services/api"
-import { mask, unMask } from 'remask'
+import { Link, useHistory } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
+import api from "../../services/api";
+import { mask, unMask } from 'remask';
+
 
 export default function SprintNew() {
   const [nome, setNome] = useState("")
