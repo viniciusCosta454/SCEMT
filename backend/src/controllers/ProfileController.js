@@ -68,5 +68,23 @@ module.exports = {
         })
 
         return response.json(projetos);
-    }
+    },
+
+    async effort(request,response) {
+
+        const empresa_id = request.headers.authorization
+
+        const equipe = await connection("Effort").where("empresa_id", empresa_id).select("*")
+
+        return response.json(equipe)
+    },
+    async cost(request,response) {
+
+        const empresa_id = request.headers.authorization
+
+        const cost = await connection("Cost").where("empresa_id", empresa_id).select("*")
+
+        return response.json(equipe)
+    },
+    
 }
