@@ -37,6 +37,10 @@ export default function Home() {
         <Link className="button" to="/membro">
           Meus Funcionários
         </Link>
+
+        <Link className="button" to="/">
+          Help
+        </Link>
        
        
       </ul>

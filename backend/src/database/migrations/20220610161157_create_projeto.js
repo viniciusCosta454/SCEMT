@@ -7,7 +7,6 @@ exports.up = function(knex) {
         table.string("dataF").notNullable()
 
         table.string("equipe_id").notNullable()
-        //table.specificType('equipe_id', 'TEXT[]').notNullable()
 
         table.string("empresa_id").notNullable()
 

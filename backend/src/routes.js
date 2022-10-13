@@ -8,6 +8,8 @@ const PdfController = require("./controllers/PdfController")
 const MembroController = require("./controllers/MembroController")
 const EquipeController = require("./controllers/EquipeController")
 const ProjetoController = require("./controllers/ProjetoController")
+const ProbeAddController = require("./controllers/ProbeAddController")
+const ProbeReusedBaseController = require("./controllers/ProbeReusedBaseController")
 
 const routes = express.Router()
 
@@ -20,6 +22,9 @@ routes.get("/profile/membro",ProfileController.membro)
 routes.get("/profile/equipe",ProfileController.equipe)
 routes.get("/profile/listagem_equipes",ProfileController.listEquipes)
 routes.get("/profile/projeto",ProfileController.projeto)
+routes.get("/profile/probeAdd",ProfileController.probeAdd)
+routes.get("/profile/probeReusedBase",ProfileController.probeReusedBase)
+routes.get("/profile/projetoDados/:projetoId",ProfileController.projetoDados)
 
 routes.get("/empresas",EmpresaController.index)
 routes.post("/empresas",EmpresaController.create)
@@ -37,5 +42,13 @@ routes.delete("/Equipe/:id",EquipeController.delete)
 routes.get("/Projeto",ProjetoController.index)
 routes.post("/Projeto",ProjetoController.create)
 routes.delete("/Projeto/:id",ProjetoController.delete)
+
+routes.get("/ProbeAdd",ProbeAddController.index)
+routes.post("/ProbeAdd",ProbeAddController.create)
+routes.delete("/ProbeAdd/:id",ProbeAddController.delete)
+
+routes.get("/ProbeReusedBase",ProbeReusedBaseController.index)
+routes.post("/ProbeReusedBase",ProbeReusedBaseController.create)
+routes.delete("/ProbeReusedBase/:id",ProbeReusedBaseController.delete)
 
 module.exports = routes

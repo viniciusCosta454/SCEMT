@@ -67,6 +67,57 @@ module.exports = {
             })
         })
 
+
+        //const probe = await connection("Projeto").where("Projeto.empresa_id", empresa_id).join
+        //("ProbeReusedBase","ProbeReusedBase.projeto_id","=","Projeto.id").join
+        //("ProbeAdd","ProbeAdd.projeto_id","=","Projeto.id").select(["Projeto.*","ProbeReusedBase.*","PorbeAdd.*"])
+
         return response.json(projetos);
+    },
+    async probeAdd(request,response) {
+
+        const empresa_id = request.headers.authorization
+
+        const probeAdd = await connection("ProbeAdd").where("empresa_id", empresa_id).select("*")
+
+        return response.json(probeAdd)
+    },
+    async probeReusedBase(request,response) {
+
+        const empresa_id = request.headers.authorization
+
+        const probeReusedBase = await connection("ProbeReusedBase").where("empresa_id", empresa_id).select("*")
+
+        return response.json(probeReusedBase)
+    },
+    async projetoDados(request,response) {
+        
+        const empresa_id = request.headers.authorization;
+        const {projetoId} = request.params;
+
+        const projetos = await connection("Projeto").where("Projeto.empresa_id", empresa_id).select(["Projeto.*"])
+        const equipes = await connection("Equipe").where("Equipe.empresa_id", empresa_id).select(["Equipe.*"])
+
+        projetos.forEach((prjt) => {
+            const equipesLista = prjt.equipe_id.split(',')
+
+            prjt.equipe_id = equipesLista.map((equipeId) => {
+                return equipes.find((equipe) => equipe.id === Number(equipeId))
+            })
+        })
+
+        // const probe = await connection("Projeto").where("Projeto.empresa_id", empresa_id).join
+        // ("ProbeReusedBase","ProbeReusedBase.projeto_id","=","Projeto.id").join
+        // ("ProbeAdd","ProbeAdd.projeto_id","=","Projeto.id").select(["Projeto.*","ProbeReusedBase.*","ProbeAdd.*"])
+
+        const probeRb = await connection("ProbeReusedBase").where("ProbeReusedBase.projeto_id", projetoId).select("ProbeReusedBase.*")
+        const probeAdd = await connection("ProbeAdd").where("ProbeAdd.projeto_id", projetoId).select("ProbeAdd.*")
+
+        const probe = {
+            probe_reused: probeRb[0],
+            probe_add: probeAdd,
+        }
+
+        return response.json({projetos, probe});
     }
 }

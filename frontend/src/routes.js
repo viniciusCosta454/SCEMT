@@ -15,7 +15,8 @@ import Help from "./pages/Help";
 import Equipe from "./pages/Equipe";
 import EquipeNew from "./pages/EquipeNew";
 import EquipeEdit from "./pages/EquipeEdit";
-import SprintNew from "./pages/SprintNew";
+import ProbeAdd from "./pages/ProbeAdd";
+import ProbeReusedBase from "./pages/ProbeReusedBase";
 
 export default function Routes() {
   return (
@@ -35,7 +36,8 @@ export default function Routes() {
         <Route path="/equipe" component={Equipe} />
         <Route path="/equipeNew" component={EquipeNew} />
         <Route path="/equipeEdit" component={EquipeEdit} />
-        <Route path="/sprintNew" component={SprintNew} />
+        <Route path="/probeAdd" component={ProbeAdd} />
+        <Route path="/probeReusedBase" component={ProbeReusedBase} />
       </Switch>
     </BrowserRouter>
   );

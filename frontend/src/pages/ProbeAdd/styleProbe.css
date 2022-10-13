@@ -1,0 +1,60 @@
+.containerProbe{
+    width: 100%;
+    max-width: 1500px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+.containerProbe .conteiner {
+    width: 100%;
+    padding: 80px;
+    background: white;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.containerProbe .conteiner section{
+    width: 100%;
+    max-width: 380px;
+}
+.containerProbe .conteiner section h1 {
+    margin: 64px 0 32px;
+    font-size: 32px;
+}
+.containerProbe .conteiner section p {
+    font-size: 18px;
+    color: #737380;
+    line-height: 32px;
+}
+.containerProbe .conteiner form{
+    width: 100%;
+    max-width: 900px;
+}
+.containerProbe .conteiner form input,
+.containerProbe .conteiner form textarea{
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+img.LogoLogin {
+    height: 400px;
+    
+}
+
+.containerProbe .conteiner form select{
+    width: 100%;
+    height: 60px;
+    color:#333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+
+}
+
+.selectProbe{
+
+}

@@ -1,6 +1,44 @@
-img.grafico {
-    height: 500px;
-    border-radius: 2%;
-    margin-top: 20px;
+.dadosProjeto{
+    width: 1350px;
+    margin-left: -100px;
+    margin-top: 30px;
+    
 }
 
+
+.tabelaDadosProbe{
+    background-color:white;
+    width: 900px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.tabelaDadosProbe thead th:nth-child(2n){
+    background-color: white;
+    color: black;
+}
+
+.tabelaDadosProbe thead th:nth-child(n){
+    padding: 11px;
+    
+}
+
+.headBase{
+    background-color: #38b6ff;
+    color: black;
+    font-size: 13px;
+    
+}
+
+.nomeBase{
+    width: 35%;
+}
+
+.titulo{
+    text-align: left;
+    font-size: 18px;
+}
+
+.tabelaDadosProbe tbody td:nth-child(n){
+    padding: 25px;
+}
