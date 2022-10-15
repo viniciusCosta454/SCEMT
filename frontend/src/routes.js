@@ -17,6 +17,7 @@ import EquipeNew from "./pages/EquipeNew";
 import EquipeEdit from "./pages/EquipeEdit";
 import ProbeAdd from "./pages/ProbeAdd";
 import ProbeReusedBase from "./pages/ProbeReusedBase";
+import Cocomo from "./pages/Cocomo";
 
 export default function Routes() {
   return (
@@ -38,6 +39,7 @@ export default function Routes() {
         <Route path="/equipeEdit" component={EquipeEdit} />
         <Route path="/probeAdd" component={ProbeAdd} />
         <Route path="/probeReusedBase" component={ProbeReusedBase} />
+        <Route path="/cocomo" component={Cocomo} />
       </Switch>
     </BrowserRouter>
   );

@@ -10,6 +10,7 @@ const EquipeController = require("./controllers/EquipeController")
 const ProjetoController = require("./controllers/ProjetoController")
 const ProbeAddController = require("./controllers/ProbeAddController")
 const ProbeReusedBaseController = require("./controllers/ProbeReusedBaseController")
+const CocomoController = require("./controllers/CocomoController")
 
 const routes = express.Router()
 
@@ -24,6 +25,7 @@ routes.get("/profile/listagem_equipes",ProfileController.listEquipes)
 routes.get("/profile/projeto",ProfileController.projeto)
 routes.get("/profile/probeAdd",ProfileController.probeAdd)
 routes.get("/profile/probeReusedBase",ProfileController.probeReusedBase)
+routes.get("/profile/cocomo",ProfileController.cocomo)
 routes.get("/profile/projetoDados/:projetoId",ProfileController.projetoDados)
 
 routes.get("/empresas",EmpresaController.index)
@@ -50,5 +52,9 @@ routes.delete("/ProbeAdd/:id",ProbeAddController.delete)
 routes.get("/ProbeReusedBase",ProbeReusedBaseController.index)
 routes.post("/ProbeReusedBase",ProbeReusedBaseController.create)
 routes.delete("/ProbeReusedBase/:id",ProbeReusedBaseController.delete)
+
+routes.get("/Cocomo",CocomoController.index)
+routes.post("/Cocomo",CocomoController.create)
+routes.delete("/Cocomo/:id",CocomoController.delete)
 
 module.exports = routes

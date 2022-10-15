@@ -12,13 +12,14 @@ export default function Projeto() {
   const [Projetos, setProjetos] = useState([]);
   const [ProbeRb, setProbeRb] = useState({});
   const [ProbeAdd, setProbeAdd] = useState([]);
+  const [Cocomo, setCocomo] = useState({});
 
   const history = useHistory();
 
   const empresaName = localStorage.getItem("nomeEmpresa");
   const empresaId = localStorage.getItem("empresaId");
   const projetoId = localStorage.getItem("idProjeto");
-  
+
   useEffect(() => {
     api
       .get(`profile/projetoDados/${projetoId}`, {
@@ -27,13 +28,13 @@ export default function Projeto() {
         },
       })
       .then((response) => {
-        console.log("data",response.data);
+        console.log("data", response.data);
         setProjetos(response.data.projetos);
         setProbeRb(response.data.probe.probe_reused);
         setProbeAdd(response.data.probe.probe_add);
+        setCocomo(response.data.probe.cocomo);
       });
-  }, [empresaId]);
-
+  }, [empresaId, projetoId]);
 
   function handleLogout() {
     localStorage.clear();
@@ -86,11 +87,11 @@ export default function Projeto() {
                       <Link className="button" to="/probeAdd">
                         Adicionar novos itens para o Probe
                       </Link>
-                      <Link className="button" to="/">
+                      <Link className="button" to="/cocomo">
                         COCOMO
                       </Link>
                       <Link className="button" to="/">
-                        COCOMO
+                        GERAR GRÁFICO
                       </Link>
                     </li>
                   </div>
@@ -120,20 +121,22 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.baseName !== undefined ? ProbeRb.baseName : 'Cadastre'}</td>
-                          <td>{ProbeRb.planBase}</td>
-                          <td>{ProbeRb.planDel}</td>
-                          <td>{ProbeRb.planMod}</td>
-                          <td>{ProbeRb.planAdd}</td>
-                          <td>{ProbeRb.actualBase}</td>
-                          <td>{ProbeRb.actualDel}</td>
-                          <td>{ProbeRb.actualMod}</td>
-                          <td>{ProbeRb.actualAdd}</td>
+                          <td>
+                            {ProbeRb.baseName !== undefined
+                              ? ProbeRb.baseName
+                              : "Cadastre"}
+                          </td>
+                          <td>{ProbeRb.planBase !== undefined
+                              ? ProbeRb.planBase
+                              : "nulo"}</td>
+                          <td>{ProbeRb?.planDel}</td>
+                          <td>{ProbeRb?.planMod}</td>
+                          <td>{ProbeRb?.planAdd}</td>
+                          <td>{ProbeRb?.actualBase}</td>
+                          <td>{ProbeRb?.actualDel}</td>
+                          <td>{ProbeRb?.actualMod}</td>
+                          <td>{ProbeRb?.actualAdd}</td>
                         </tr>
-                        
-                            
-                          
-                        
                       </tbody>
 
                       <thead>
@@ -146,8 +149,8 @@ export default function Projeto() {
                       <tbody className="bodyBase">
                         <tr>
                           <td>{ProbeRb.reusedName}</td>
-                          <td colSpan={2}>{ProbeRb.plan}</td>
-                          <td colSpan={2}>{ProbeRb.actual}</td>
+                          <td colSpan={2}>{ProbeRb?.plan}</td>
+                          <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
                       </tbody>
 
@@ -172,22 +175,57 @@ export default function Projeto() {
                         </tr>
                       </thead>
                       <tbody className="bodyBase">
-                        {
-                          ProbeAdd.map((probeAdd) => {
-                            return (
-                              <tr>
-                                <td colSpan={2}>{probeAdd.addedName}</td>
-                                <td colSpan={2}>{probeAdd.partType}</td>
-                                <td>{probeAdd.planItens}</td>
-                                <td>{probeAdd.planRelSz}</td>
-                                <td>{probeAdd.planSize}</td>
-                                <td>{probeAdd.actualItens}</td>
-                                <td>{probeAdd.actualSize}</td>
-                              </tr>
-                            )
-                          })
-                        }
-                      
+                        {ProbeAdd.map((probeAdd) => {
+                          return (
+                            <tr>
+                              <td colSpan={2}>{probeAdd.addedName}</td>
+                              <td colSpan={2}>{probeAdd.partType}</td>
+                              <td>{probeAdd?.planItens}</td>
+                              <td>{probeAdd.planRelSz}</td>
+                              <td>{probeAdd.planSize}</td>
+                              <td>{probeAdd.actualItens}</td>
+                              <td>{probeAdd.actualSize}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <table className="tabelaDadosCocomo">
+                      <thead>
+                        <tr className="titulo">
+                          <th colSpan={4}>COCOMO</th>
+                        </tr>
+                        <tr className="cocomoTitulo">
+                          <th colSpan={3}>Descrição</th>
+                          <th colSpan={1}>Escala: 0 - 5</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bodyCocomo">
+                        
+                        <tr>
+                          <td colSpan={3}>Precedência</td>
+                          <td colSpan={1}>{Cocomo?.precedencia}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3}>Flexibilidade do Desenvolvimento</td>
+                          <td colSpan={1}>{Cocomo?.flexibilidade}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3}>Arquitetura/Solução de Riscos</td>
+                          <td colSpan={1}>{Cocomo?.arquitetura}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3}>Coesão da Equipe</td>
+                          <td colSpan={1}>{Cocomo?.coesao}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3}>Maturidade do Processo</td>
+                          <td colSpan={1}>{Cocomo?.maturidade}</td>
+                        </tr>
+                        <tr>
+                          <td colSpan={3}>PM Necessário</td>
+                          <td colSpan={1}>formula</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

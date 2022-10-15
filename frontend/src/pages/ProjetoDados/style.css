@@ -19,7 +19,7 @@
 }
 
 .tabelaDadosProbe thead th:nth-child(n){
-    padding: 11px;
+    padding: 15px;
     
 }
 
@@ -40,5 +40,37 @@
 }
 
 .tabelaDadosProbe tbody td:nth-child(n){
-    padding: 25px;
+    padding: 15px;
+}
+.tabelaDadosProbe tbody tr:nth-child(2n){
+    background-color: rgb(234, 237, 238);
+}
+
+
+.tabelaDadosCocomo{
+    background-color:white;
+    width: 900px;
+    border-radius: 8px;
+    text-align: center;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.bodyCocomo{
+    font-size: 15px;
+}
+
+.tabelaDadosCocomo tbody td:nth-child(n){
+    padding: 15px;
+}
+.tabelaDadosCocomo tbody tr:nth-child(2n){
+    background-color: rgb(234, 237, 238);
+}
+.tabelaDadosCocomo thead th:nth-child(n){
+    padding: 15px;
+    
+}
+
+.cocomoTitulo{
+    background-color: #38b6ff;
 }

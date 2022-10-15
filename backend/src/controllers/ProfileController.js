@@ -90,6 +90,14 @@ module.exports = {
 
         return response.json(probeReusedBase)
     },
+    async cocomo(request,response) {
+
+        const empresa_id = request.headers.authorization
+
+        const cocomo = await connection("Cocomo").where("empresa_id", empresa_id).select("*")
+
+        return response.json(cocomo)
+    },
     async projetoDados(request,response) {
         
         const empresa_id = request.headers.authorization;
@@ -106,16 +114,16 @@ module.exports = {
             })
         })
 
-        // const probe = await connection("Projeto").where("Projeto.empresa_id", empresa_id).join
-        // ("ProbeReusedBase","ProbeReusedBase.projeto_id","=","Projeto.id").join
-        // ("ProbeAdd","ProbeAdd.projeto_id","=","Projeto.id").select(["Projeto.*","ProbeReusedBase.*","ProbeAdd.*"])
-
+        
         const probeRb = await connection("ProbeReusedBase").where("ProbeReusedBase.projeto_id", projetoId).select("ProbeReusedBase.*")
         const probeAdd = await connection("ProbeAdd").where("ProbeAdd.projeto_id", projetoId).select("ProbeAdd.*")
+        
+        const cocomo = await connection("Cocomo").where("Cocomo.projeto_id", projetoId).select("Cocomo.*")
 
         const probe = {
             probe_reused: probeRb[0],
             probe_add: probeAdd,
+            cocomo: cocomo[0],
         }
 
         return response.json({projetos, probe});
