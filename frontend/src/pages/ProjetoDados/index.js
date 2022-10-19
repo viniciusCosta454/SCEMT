@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart } from 'react-chartjs-2'
 
 import "./style.css";
 
 import logoImg from "../../assets/logo.png";
 
 import api from "../../services/api";
+
 
 export default function Projeto() {
   const [Projetos, setProjetos] = useState([]);
@@ -40,6 +43,99 @@ export default function Projeto() {
     localStorage.clear();
     history.push("/");
   }
+
+  function defineSemanas(proj) {
+    const strI = proj.dataI.replace(/\//g, "-");
+    const dateObjectI = new Date(strI);
+
+    const strF = proj.dataF.replace(/\//g, "-");
+    const dateObjectF = new Date(strF);
+    
+    const dias = (dateObjectF.getTime() - dateObjectI.getTime()) / (1000 * 60 * 60 * 24);
+    const semanas = dias / 7;
+    return semanas
+  }
+
+  function defineDatas(proj) {
+
+    const strI = proj.dataI.replace(/\//g, "-");
+    const dateObjectI = new Date(strI);
+    
+    const semanas = defineSemanas(proj);
+    
+    const umaSemana = (1000 * 60 * 60 * 24 * 7);
+    const currentDate = new Date();
+    currentDate.setTime(dateObjectI.getTime());
+
+    const eixoXdias = [];
+
+    for (let index = 0; index < semanas; index++) {
+      currentDate.setTime(currentDate.getTime() + umaSemana);
+      eixoXdias.push(currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear());
+    }
+
+    return eixoXdias;
+  }
+
+  function plotaItensProbe(prbAdd) {
+    const data = []
+    prbAdd.map((probeAdd) => {
+      data.push(probeAdd.actualSize);
+    })
+
+    return data;
+  }
+
+  function calculaMediana(dados){
+    var valIni = 0;
+    var valFim = 0;
+    if (dados.length>1) {
+      var d1 = dados[0];
+      var d2 = dados[1];
+      var d3 = dados[dados.length-1];
+      valIni = parseInt((d1-d2)/2)+parseInt(d2);
+      valFim = parseInt((d1-d3)/2)+parseInt(d3);
+      
+    }
+    const semanas = dados.length;
+
+    const passo = (valFim-valIni)/semanas;
+    var data = [];
+    var p = valIni;
+    for (let index = 0; index < semanas; index++) {
+      data.push(p);
+      p = p+passo;
+    }
+    return data;
+  }
+
+  function plotaRlProbe(proj, prbRB, prbAdd) {
+    var data = [1,2,3,4,5,6];
+    //ADICIONAR DADOS
+/*
+    const valIni = 0;
+    const valFim = 50;
+    const semanas = defineSemanas(proj);
+
+    const passo = (valFim-valIni)/semanas;
+    var data = [];
+    var p = valIni;
+    for (let index = 0; index < semanas; index++) {
+      data.push(p);
+      p = p+passo;
+    }
+*/
+    var dados = plotaItensProbe(prbAdd);
+    /*var eixoX = []
+    for (let x = 1; x <= dados.length; x++) {
+      eixoX.push(x);
+    }*/
+    var mediana = calculaMediana(dados);
+
+    return mediana;
+  }
+
+
 
   return (
     <div className="profile-container">
@@ -228,8 +324,32 @@ export default function Projeto() {
                         </tr>
                       </tbody>
                     </table>
+                    <Chart
+                      type='line'
+                      data={{
+                      labels: defineDatas(Projeto),
+                      datasets: [{
+                        label: 'LOCs adicionadas',
+                        data: plotaItensProbe(ProbeAdd),
+                        backgroundColor: '#0000ff88',
+                        borderColor: '#0000ff88'
+                        },
+                        {
+                          label: 'RL Probe',
+                          data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
+                          backgroundColor: '#ff000088',
+                          borderColor: '#ff000088'
+                          }]
+                      }}
+                      width={300}
+                      height={100}
+                      options={{
+                          maintainAspectRatio: true,
+                      }}
+                    />
                   </div>
                 </ul>
+                
               </div>
             );
           }
