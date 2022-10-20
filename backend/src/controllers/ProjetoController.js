@@ -29,7 +29,7 @@ module.exports = {
         const {nome, dataI,dataF,equipe_id } = request.body
         const empresa_id = request.headers.authorization
 
-        console.log(equipe_id)
+        //console.log(equipe_id)
 
         const [id] = await connection("Projeto").insert({
             nome,
