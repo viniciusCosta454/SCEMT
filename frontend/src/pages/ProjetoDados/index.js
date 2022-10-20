@@ -121,14 +121,8 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>
-                            {ProbeRb.baseName !== undefined
-                              ? ProbeRb.baseName
-                              : "Cadastre"}
-                          </td>
-                          <td>{ProbeRb.planBase !== undefined
-                              ? ProbeRb.planBase
-                              : "nulo"}</td>
+                          <td>{ProbeRb?.baseName}</td>
+                          <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
                           <td>{ProbeRb?.planAdd}</td>
@@ -148,7 +142,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.reusedName}</td>
+                          <td>{ProbeRb?.reusedName}</td>
                           <td colSpan={2}>{ProbeRb?.plan}</td>
                           <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
@@ -178,13 +172,13 @@ export default function Projeto() {
                         {ProbeAdd.map((probeAdd) => {
                           return (
                             <tr>
-                              <td colSpan={2}>{probeAdd.addedName}</td>
-                              <td colSpan={2}>{probeAdd.partType}</td>
+                              <td colSpan={2}>{probeAdd?.addedName}</td>
+                              <td colSpan={2}>{probeAdd?.partType}</td>
                               <td>{probeAdd?.planItens}</td>
-                              <td>{probeAdd.planRelSz}</td>
-                              <td>{probeAdd.planSize}</td>
-                              <td>{probeAdd.actualItens}</td>
-                              <td>{probeAdd.actualSize}</td>
+                              <td>{probeAdd?.planRelSz}</td>
+                              <td>{probeAdd?.planSize}</td>
+                              <td>{probeAdd?.actualItens}</td>
+                              <td>{probeAdd?.actualSize}</td>
                             </tr>
                           );
                         })}
@@ -201,7 +195,6 @@ export default function Projeto() {
                         </tr>
                       </thead>
                       <tbody className="bodyCocomo">
-                        
                         <tr>
                           <td colSpan={3}>Precedência</td>
                           <td colSpan={1}>{Cocomo?.precedencia}</td>
