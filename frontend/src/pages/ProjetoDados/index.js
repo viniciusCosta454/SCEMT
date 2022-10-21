@@ -167,7 +167,7 @@ export default function Projeto() {
                       <strong>EQUIPE RESPONSÁVEL :</strong>
                       <p>
                         {Projeto.equipe_id.map((equipe) => {
-                          return `${equipe.nome} - `;
+                          return `${equipe?.nome} - `;
                         })}
                       </p>
 
@@ -217,14 +217,8 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>
-                            {ProbeRb.baseName !== undefined
-                              ? ProbeRb.baseName
-                              : "Cadastre"}
-                          </td>
-                          <td>{ProbeRb.planBase !== undefined
-                              ? ProbeRb.planBase
-                              : "nulo"}</td>
+                          <td>{ProbeRb?.baseName}</td>
+                          <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
                           <td>{ProbeRb?.planAdd}</td>
@@ -244,7 +238,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.reusedName}</td>
+                          <td>{ProbeRb?.baseName}</td>
                           <td colSpan={2}>{ProbeRb?.plan}</td>
                           <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
