@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Chart } from 'react-chartjs-2'
+import { Chart as ChartJS } from "chart.js/auto";
+import { Chart } from "react-chartjs-2";
 
 import "./style.css";
 
 import logoImg from "../../assets/logo.png";
 
 import api from "../../services/api";
-
 
 export default function Projeto() {
   const [Projetos, setProjetos] = useState([]);
@@ -50,20 +49,20 @@ export default function Projeto() {
 
     const strF = proj.dataF.replace(/\//g, "-");
     const dateObjectF = new Date(strF);
-    
-    const dias = (dateObjectF.getTime() - dateObjectI.getTime()) / (1000 * 60 * 60 * 24);
+
+    const dias =
+      (dateObjectF.getTime() - dateObjectI.getTime()) / (1000 * 60 * 60 * 24);
     const semanas = dias / 7;
-    return semanas
+    return semanas;
   }
 
   function defineDatas(proj) {
-
     const strI = proj.dataI.replace(/\//g, "-");
     const dateObjectI = new Date(strI);
-    
+
     const semanas = defineSemanas(proj);
-    
-    const umaSemana = (1000 * 60 * 60 * 24 * 7);
+
+    const umaSemana = 1000 * 60 * 60 * 24 * 7;
     const currentDate = new Date();
     currentDate.setTime(dateObjectI.getTime());
 
@@ -71,88 +70,95 @@ export default function Projeto() {
 
     for (let index = 0; index < semanas; index++) {
       currentDate.setTime(currentDate.getTime() + umaSemana);
-      eixoXdias.push(currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear());
+      eixoXdias.push(
+        currentDate.getDate() +
+          "/" +
+          (currentDate.getMonth() + 1) +
+          "/" +
+          currentDate.getFullYear()
+      );
     }
 
     return eixoXdias;
   }
 
   function plotaItensProbe(prbAdd) {
-    const data = []
+    const data = [];
     prbAdd.map((probeAdd) => {
       data.push(probeAdd.actualSize);
-    })
+    });
 
     return data;
   }
 
-  function calculaMediana(dados){
+  function calculaMediana(dados) {
     var valIni = 0;
     var valFim = 0;
-    if (dados.length>1) {
+    if (dados.length > 1) {
       var d1 = dados[0];
       var d2 = dados[1];
-      var d3 = dados[dados.length-1];
-      valIni = parseInt((d1-d2)/2)+parseInt(d2);
-      valFim = parseInt((d1-d3)/2)+parseInt(d3);
-      
+      var d3 = dados[dados.length - 1];
+      valIni = parseInt((d1 - d2) / 2) + parseInt(d2);
+      valFim = parseInt((d1 - d3) / 2) + parseInt(d3);
     }
     const semanas = dados.length;
 
-    const passo = (valFim-valIni)/semanas;
+    const passo = (valFim - valIni) / semanas;
     var data = [];
     var p = valIni;
     for (let index = 0; index < semanas; index++) {
       data.push(p);
-      p = p+passo;
+      p = p + passo;
     }
     return data;
   }
 
-    //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
+  //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
 
-    //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
+  //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
 
-    var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
+  var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
 
-    //Upper "E" means Effort
-    //Beta0(E) -> Estimado
-    //Beta1(E) -> Realizado
+  //Upper "E" means Effort
+  //Beta0(E) -> Estimado
+  //Beta1(E) -> Realizado
 
-    //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
+  //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
 
-    //var locNovasModificadas = findLineByLeastSquares(locEstimado, defineDatas(Projeto));
+  //var locNovasModificadas = findLineByLeastSquares(locEstimado, defineDatas(Projeto));
 
-    //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
+  //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
 
-    var totalEffortE = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
+  var totalEffortE =
+    Projeto.probeAdd +
+    Projeto.actualBase -
+    Projeto.actualDel -
+    Projeto.actualMod +
+    Projeto.probe_reused;
 
-    //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
+  //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
 
-    var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
+  var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
 
-    //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
+  //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
 
-    //var estimatedDevTime = findLineByLeastSquares(totalNewReusable, defineDatas(Projeto));
-
-
+  //var estimatedDevTime = findLineByLeastSquares(totalNewReusable, defineDatas(Projeto));
 
   function plotaRlProbe(proj, prbRB, prbAdd) {
-
     //var data = [1,2,3,4,5,6];
 
     const valIni = 0;
     const valFim = 50;
     const semanas = defineSemanas(proj);
-    const passo = (valFim-valIni)/semanas;
+    const passo = (valFim - valIni) / semanas;
     var data = [];
     var p = valIni;
     for (let index = 0; index < semanas; index++) {
       data.push(p);
-      p = p+passo;
+      p = p + passo;
     }
     var dados = plotaItensProbe(prbAdd);
-    var eixoX = []
+    var eixoX = [];
     for (let x = 1; x <= dados.length; x++) {
       eixoX.push(x);
     }
@@ -235,8 +241,6 @@ export default function Projeto() {
     return [result_values_x, result_values_y];
 }*/
 
-
-
   return (
     <div className="profile-container">
       <header>
@@ -284,10 +288,7 @@ export default function Projeto() {
                         Adicionar novos itens para o Probe
                       </Link>
                       <Link className="button" to="/cocomo">
-                        COCOMO
-                      </Link>
-                      <Link className="button" to="/">
-                        GERAR GRÁFICO
+                        Adicionar escalas para o Cocomo
                       </Link>
                     </li>
                   </div>
@@ -317,14 +318,8 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>
-                            {ProbeRb.baseName !== undefined
-                              ? ProbeRb.baseName
-                              : "Cadastre"}
-                          </td>
-                          <td>{ProbeRb.planBase !== undefined
-                              ? ProbeRb.planBase
-                              : "nulo"}</td>
+                          <td>{ProbeRb?.baseName}</td>
+                          <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
                           <td>{ProbeRb?.planAdd}</td>
@@ -344,7 +339,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.reusedName}</td>
+                          <td>{ProbeRb?.reusedName}</td>
                           <td colSpan={2}>{ProbeRb?.plan}</td>
                           <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
@@ -376,7 +371,7 @@ export default function Projeto() {
                             <tr>
                               <td colSpan={2}>{probeAdd.addedName}</td>
                               <td colSpan={2}>{probeAdd.partType}</td>
-                              <td>{probeAdd?.planItens}</td>
+                              <td>{probeAdd.planItens}</td>
                               <td>{probeAdd.planRelSz}</td>
                               <td>{probeAdd.planSize}</td>
                               <td>{probeAdd.actualItens}</td>
@@ -397,7 +392,6 @@ export default function Projeto() {
                         </tr>
                       </thead>
                       <tbody className="bodyCocomo">
-                        
                         <tr>
                           <td colSpan={3}>Precedência</td>
                           <td colSpan={1}>{Cocomo?.precedencia}</td>
@@ -420,42 +414,52 @@ export default function Projeto() {
                         </tr>
                         <tr>
                           <td colSpan={3}>PM Necessário</td>
-                          <td colSpan={1}>{((Cocomo.precedencia + Cocomo.flexibilidade + Cocomo.arquitetura + Cocomo.coesao + Cocomo.maturidade) / 100) + 1.01 + " Mês"}</td>
+                          <td colSpan={1}>
+                            {(Cocomo?.precedencia +
+                              Cocomo?.flexibilidade +
+                              Cocomo?.arquitetura +
+                              Cocomo?.coesao +
+                              Cocomo?.maturidade) /
+                              100 +
+                              1.01 +
+                              " Mês"}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                     <Chart
-                      type='line'
+                      type="line"
                       data={{
-                      labels: defineDatas(Projeto),
-                      datasets: [{
-                        label: 'LOCs adicionadas',
-                        data: plotaItensProbe(ProbeAdd),
-                        backgroundColor: '#0000ff88',
-                        borderColor: '#0000ff88'
-                        },
-                        {
-                          label: 'RL Probe',
-                          data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
-                          backgroundColor: '#ff000088',
-                          borderColor: '#ff000088'
-                          }/*,
+                        labels: defineDatas(Projeto),
+                        datasets: [
+                          {
+                            label: "LOCs adicionadas",
+                            data: plotaItensProbe(ProbeAdd),
+                            backgroundColor: "#0000ff88",
+                            borderColor: "#0000ff88",
+                          },
+                          {
+                            label: "RL Probe",
+                            data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
+                            backgroundColor: "#ff000088",
+                            borderColor: "#ff000088",
+                          } /*,
                           {
                             label: 'RL Probe Victor',
                             data: findLineByLeastSquares(defineDatas(Projeto), ProbeAdd),
                             backgroundColor: '#ffdddd88',
                             borderColor: '#ffdddd88'
-                            }*/]
+                            }*/,
+                        ],
                       }}
                       width={300}
                       height={100}
                       options={{
-                          maintainAspectRatio: true,
+                        maintainAspectRatio: true,
                       }}
                     />
                   </div>
                 </ul>
-                
               </div>
             );
           }
