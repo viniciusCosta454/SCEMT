@@ -38,7 +38,7 @@ export default function Home() {
           Meus Funcionários
         </Link>
 
-        <Link className="button" to="/">
+        <Link className="button" to="/help">
           Help
         </Link>
        

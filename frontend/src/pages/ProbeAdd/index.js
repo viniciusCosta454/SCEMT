@@ -76,7 +76,7 @@ export default function ProbeAdd() {
             Tipos: CALC, DATA, IO, LOGIC, SETUP, TEXT
           </p>
           <p>
-            Tamanho Relativo: VS,
+            Tamanho Relativo: VS, S, M, L, VL
           </p>
           <Link className="back-link" to="/projetoDados">
             <FiArrowLeft size={16} color="#38b6ff" />

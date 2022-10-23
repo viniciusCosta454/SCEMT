@@ -75,21 +75,21 @@ export default function Membro() {
         {
         Membros.map(Membro => (
           <li key={Membro.id}>
-            <strong>NOME DO MEMBRO :</strong>
+            <strong>NOME :</strong>
             <p>{Membro.nome}</p>
-            <strong>CPF DO MEMBRO :</strong>
+            <strong>CPF :</strong>
             <p>{Membro.cpf}</p>
-            <strong>TELEFONE DO MEMBRO :</strong>
+            <strong>TELEFONE :</strong>
             <p>{Membro.numero}</p>
-            <strong>ENDEREÇO DO MEMBRO :</strong>
+            <strong>ENDEREÇO :</strong>
             <p>{Membro.endereco}</p>
-            <strong>EMAIL DO MEMBRO :</strong>
+            <strong>EMAIL :</strong>
             <p>{Membro.email}</p>
-            <strong>SEXO DO MEMBRO :</strong>
+            <strong>SEXO :</strong>
             <p>{Membro.sexo}</p>
-            <strong>NASCIMENTO DO MEMBRO :</strong>
+            <strong>NASCIMENTO :</strong>
             <p>{Membro.nacimento}</p>
-            <strong>MEMBRO DA EQUIPE : </strong>
+            <strong>EQUIPE : </strong>
             <p>{Membro.equipe_nome}</p>
             
             

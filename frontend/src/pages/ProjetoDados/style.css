@@ -13,10 +13,7 @@
     text-align: center;
 }
 
-.tabelaDadosProbe thead th:nth-child(2n){
-    background-color: white;
-    color: black;
-}
+
 
 .tabelaDadosProbe thead th:nth-child(n){
     padding: 15px;
