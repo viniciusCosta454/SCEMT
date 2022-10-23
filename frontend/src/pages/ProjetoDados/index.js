@@ -109,14 +109,41 @@ export default function Projeto() {
     return data;
   }
 
+    //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
+
+    //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
+
+    var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
+
+    //Upper "E" means Effort
+    //Beta0(E) -> Estimado
+    //Beta1(E) -> Realizado
+
+    //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
+
+    //var locNovasModificadas = findLineByLeastSquares(locEstimado, defineDatas(Projeto));
+
+    //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
+
+    var totalEffortE = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
+
+    //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
+
+    var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
+
+    //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
+
+    //var estimatedDevTime = findLineByLeastSquares(totalNewReusable, defineDatas(Projeto));
+
+
+
   function plotaRlProbe(proj, prbRB, prbAdd) {
-    var data = [1,2,3,4,5,6];
-    //ADICIONAR DADOS
-/*
+
+    //var data = [1,2,3,4,5,6];
+
     const valIni = 0;
     const valFim = 50;
     const semanas = defineSemanas(proj);
-
     const passo = (valFim-valIni)/semanas;
     var data = [];
     var p = valIni;
@@ -124,16 +151,89 @@ export default function Projeto() {
       data.push(p);
       p = p+passo;
     }
-*/
     var dados = plotaItensProbe(prbAdd);
-    /*var eixoX = []
+    var eixoX = []
     for (let x = 1; x <= dados.length; x++) {
       eixoX.push(x);
-    }*/
+    }
     var mediana = calculaMediana(dados);
-
     return mediana;
   }
+
+  /*function findLineByLeastSquares(values_x, values_y) {
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_xx = 0;
+    var count = 0;
+
+    
+    //We'll use those variables for faster read/write access.
+     
+
+    var dadosEixoY = [];                                        // TODO
+    for (let index = 0; index < values_y.length; index++) {
+      dadosEixoY.push(values_y);
+    }
+
+
+    var x = 0;
+    var y = 0;
+    var values_length = values_x.length;
+
+
+    console.log(values_x);
+    console.log(values_y);                                      // TODO ERROR
+
+    if (values_length != values_y.length) {
+        throw new Error('The parameters values_x and values_y need to have same size!');
+    }
+
+    
+    //Nothing to do.
+    
+
+    if (values_length === 0) {
+        return [ [], [] ];
+    }
+    
+  
+    //Calculate the sum for each of the parts necessary.
+    
+
+    for (var v = 0; v < values_length; v++) {
+        x = values_x[v];
+        y = values_y[v];
+        sum_x += x;
+        sum_y += y;
+        sum_xx += x*x;
+        sum_xy += x*y;
+        count++;
+    }
+
+  
+    //Calculate m and b for the formular y = x * m + b.
+    
+
+    var m = (count*sum_xy - sum_x*sum_y) / (count*sum_xx - sum_x*sum_x);
+    var b = (sum_y/count) - (m*sum_x)/count;
+
+  
+    //We will make the x and y result line now.
+    
+
+    var result_values_x = [];
+    var result_values_y = [];
+
+    for (var v = 0; v < values_length; v++) {
+        x = values_x[v];
+        y = x * m + b;
+        result_values_x.push(x);
+        result_values_y.push(y);
+    }
+
+    return [result_values_x, result_values_y];
+}*/
 
 
 
@@ -320,7 +420,7 @@ export default function Projeto() {
                         </tr>
                         <tr>
                           <td colSpan={3}>PM Necessário</td>
-                          <td colSpan={1}>formula</td>
+                          <td colSpan={1}>{((Cocomo.precedencia + Cocomo.flexibilidade + Cocomo.arquitetura + Cocomo.coesao + Cocomo.maturidade) / 100) + 1.01 + " Mês"}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -339,7 +439,13 @@ export default function Projeto() {
                           data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
                           backgroundColor: '#ff000088',
                           borderColor: '#ff000088'
-                          }]
+                          }/*,
+                          {
+                            label: 'RL Probe Victor',
+                            data: findLineByLeastSquares(defineDatas(Projeto), ProbeAdd),
+                            backgroundColor: '#ffdddd88',
+                            borderColor: '#ffdddd88'
+                            }*/]
                       }}
                       width={300}
                       height={100}
