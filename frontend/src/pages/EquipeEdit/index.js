@@ -61,7 +61,7 @@ export default function EquipeEdit() {
           </p>
           <Link className="back-link" to="/Membro">
             <FiArrowLeft size={16} color="#38b6ff" />
-            Voltar para Home
+            Voltar para Membros
           </Link>
         </section>
         <form onSubmit={edit}>
