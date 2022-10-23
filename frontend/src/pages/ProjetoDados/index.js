@@ -57,7 +57,6 @@ export default function Projeto() {
   }
 
   function defineDatas(proj) {
-
     const strI = proj.dataI.replace(/\//g, "-");
     const dateObjectI = new Date(strI);
     
@@ -111,8 +110,7 @@ export default function Projeto() {
 
   function plotaRlProbe(proj, prbRB, prbAdd) {
     var data = [1,2,3,4,5,6];
-    //ADICIONAR DADOS
-/*
+
     const valIni = 0;
     const valFim = 50;
     const semanas = defineSemanas(proj);
@@ -124,12 +122,14 @@ export default function Projeto() {
       data.push(p);
       p = p+passo;
     }
-*/
+    
     var dados = plotaItensProbe(prbAdd);
-    /*var eixoX = []
+
+    var eixoX = []
     for (let x = 1; x <= dados.length; x++) {
       eixoX.push(x);
-    }*/
+    }
+
     var mediana = calculaMediana(dados);
 
     return mediana;
@@ -167,7 +167,7 @@ export default function Projeto() {
                       <strong>EQUIPE RESPONSÁVEL :</strong>
                       <p>
                         {Projeto.equipe_id.map((equipe) => {
-                          return `${equipe.nome} - `;
+                          return `${equipe?.nome} - `;
                         })}
                       </p>
 
@@ -214,9 +214,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>
-                            {ProbeRb?.baseName}
-                          </td>
+                          <td>{ProbeRb?.baseName}</td>
                           <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
@@ -327,12 +325,12 @@ export default function Projeto() {
                         backgroundColor: '#0000ff88',
                         borderColor: '#0000ff88'
                         },
-                        {
-                          label: 'RL Probe',
-                          data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
-                          backgroundColor: '#ff000088',
-                          borderColor: '#ff000088'
-                          }]
+                          {
+                            label: 'Mediatriz Effort',
+                            data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
+                            backgroundColor: '#ffff00ff',
+                            borderColor: '#ffff0088'
+                            }]
                       }}
                       width={300}
                       height={100}
@@ -341,8 +339,7 @@ export default function Projeto() {
                       }}
                     />
                   </div>
-                </ul>
-                
+                </ul>                
               </div>
             );
           }

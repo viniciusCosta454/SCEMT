@@ -80,7 +80,7 @@ export default function Projeto() {
             <strong>EQUIPE RESPONSÁVEL :</strong>
             <p>
               {Projeto.equipe_id.map((equipe) => {
-                return `${equipe.nome} - `
+                return `${equipe?.nome} - `
               })}
             </p>
 
