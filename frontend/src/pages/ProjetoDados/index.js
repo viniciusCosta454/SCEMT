@@ -73,7 +73,6 @@ export default function Projeto() {
       currentDate.setTime(currentDate.getTime() + umaSemana);
       eixoXdias.push(currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear());
     }
-
     return eixoXdias;
   }
 
@@ -160,50 +159,48 @@ export default function Projeto() {
     return mediana;
   }
 
-  /*function findLineByLeastSquares(values_x, values_y) {
+
+
+
+
+
+  function findLineByLeastSquares(prbAdd) {
     var sum_x = 0;
     var sum_y = 0;
     var sum_xy = 0;
     var sum_xx = 0;
     var count = 0;
-
-    
-    //We'll use those variables for faster read/write access.
-     
-
-    var dadosEixoY = [];                                        // TODO
-    for (let index = 0; index < values_y.length; index++) {
-      dadosEixoY.push(values_y);
-    }
-
-
     var x = 0;
     var y = 0;
-    var values_length = values_x.length;
+     
+
+    const dadosEixoY1 = [];
+    prbAdd.map((probeAdd) => {
+      dadosEixoY1.push(probeAdd.actualSize);
+    })
+
+    const dadosEixoY2 = [];
+    prbAdd.map((planAdd) => {
+      dadosEixoY2.push(planAdd.actualSize);
+    })
+
+    console.log(dadosEixoY1);
+    console.log(dadosEixoY2);
 
 
-    console.log(values_x);
-    console.log(values_y);                                      // TODO ERROR
-
-    if (values_length != values_y.length) {
+    if (dadosEixoY1 != dadosEixoY2) {
         throw new Error('The parameters values_x and values_y need to have same size!');
     }
 
-    
-    //Nothing to do.
-    
-
-    if (values_length === 0) {
+    if (dadosEixoY1 === 0) {
         return [ [], [] ];
     }
     
-  
     //Calculate the sum for each of the parts necessary.
     
-
-    for (var v = 0; v < values_length; v++) {
-        x = values_x[v];
-        y = values_y[v];
+    for (var v = 0; v < dadosEixoY1.length; v++) {
+        x = dadosEixoY1[v];
+        y = dadosEixoY2[v];
         sum_x += x;
         sum_y += y;
         sum_xx += x*x;
@@ -213,7 +210,6 @@ export default function Projeto() {
 
   
     //Calculate m and b for the formular y = x * m + b.
-    
 
     var m = (count*sum_xy - sum_x*sum_y) / (count*sum_xx - sum_x*sum_x);
     var b = (sum_y/count) - (m*sum_x)/count;
@@ -221,19 +217,18 @@ export default function Projeto() {
   
     //We will make the x and y result line now.
     
-
     var result_values_x = [];
     var result_values_y = [];
 
-    for (var v = 0; v < values_length; v++) {
-        x = values_x[v];
+    for (var v = 0; v < dadosEixoY1.length; v++) {
+        x = dadosEixoY1[v];
         y = x * m + b;
         result_values_x.push(x);
         result_values_y.push(y);
     }
 
     return [result_values_x, result_values_y];
-}*/
+}
 
 
 
@@ -439,13 +434,13 @@ export default function Projeto() {
                           data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
                           backgroundColor: '#ff000088',
                           borderColor: '#ff000088'
-                          }/*,
+                          },
                           {
                             label: 'RL Probe Victor',
-                            data: findLineByLeastSquares(defineDatas(Projeto), ProbeAdd),
-                            backgroundColor: '#ffdddd88',
-                            borderColor: '#ffdddd88'
-                            }*/]
+                            data: findLineByLeastSquares(ProbeAdd),
+                            backgroundColor: '#dd222288',
+                            borderColor: '#dd222288'
+                            }]
                       }}
                       width={300}
                       height={100}
