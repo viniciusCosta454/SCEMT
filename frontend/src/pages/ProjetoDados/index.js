@@ -184,10 +184,7 @@ export default function Projeto() {
                         Adicionar novos itens para o Probe
                       </Link>
                       <Link className="button" to="/cocomo">
-                        COCOMO
-                      </Link>
-                      <Link className="button" to="/">
-                        GERAR GRÁFICO
+                        Adicionar escalas para o Cocomo
                       </Link>
                     </li>
                   </div>
@@ -218,13 +215,9 @@ export default function Projeto() {
                       <tbody className="bodyBase">
                         <tr>
                           <td>
-                            {ProbeRb.baseName !== undefined
-                              ? ProbeRb.baseName
-                              : "Cadastre"}
+                            {ProbeRb?.baseName}
                           </td>
-                          <td>{ProbeRb.planBase !== undefined
-                              ? ProbeRb.planBase
-                              : "nulo"}</td>
+                          <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
                           <td>{ProbeRb?.planAdd}</td>
@@ -244,7 +237,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.reusedName}</td>
+                          <td>{ProbeRb?.reusedName}</td>
                           <td colSpan={2}>{ProbeRb?.plan}</td>
                           <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
@@ -320,7 +313,7 @@ export default function Projeto() {
                         </tr>
                         <tr>
                           <td colSpan={3}>PM Necessário</td>
-                          <td colSpan={1}>formula</td>
+                          <td colSpan={1}></td>
                         </tr>
                       </tbody>
                     </table>

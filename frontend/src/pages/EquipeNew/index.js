@@ -57,7 +57,7 @@ export default function EquipeNew() {
           <img src={logoImg} className="LogoLogin" alt="SCEMT" />
           <h1>Cadastrar Nova Equipe</h1>
           <p>
-            Escolha um nome e selecione os membros dessa equipe.
+            Escolha um nome para a sua nova equipe.
           </p>
           <Link className="back-link" to="/equipe">
             <FiArrowLeft size={16} color="#38b6ff" />
