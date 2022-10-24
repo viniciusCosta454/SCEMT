@@ -228,26 +228,44 @@ export default function Projeto() {
     //const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod + Projeto.planSize; 
     //const real = Projeto.probeAdd + Projeto.actualBase + Projeto.actualDel + Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
   
-    const planejado = []
-    ProbeAdd.map((planAdd, planBase, planDel, planItens, planMod, planSize) => {
-      planejado.push(planAdd, planBase, planDel, planItens, planMod, planSize);
+    const planejadoReusoBase = [
+      ProbeRb?.planBase,
+      ProbeRb?.planDel,
+      ProbeRb?.planMod,
+      ProbeRb?.planAdd,
+      //Projeto.ProbeRb?.actualBase,
+      //Projeto.ProbeRb?.actualDel,
+      //Projeto.ProbeRb?.actualMod,
+      //Projeto.ProbeRb?.actualAdd,
+      ProbeRb?.plan]
+      //Projeto.ProbeRb?.actual]
+      parseInt(planejadoReusoBase);
+
+
+
+    const planejadoNovosItens = []
+    ProbeAdd.map((probeAdd) => {
+      planejadoNovosItens.push(
+        probeAdd.planItens,
+        probeAdd.planSize);
+      return parseInt(planejadoNovosItens);
     })
 
-    const real = []
-    ProbeAdd.map((probeAdd, actualBase, actualDel, actualItens, actualMod, actualSize) => {
-      real.push(probeAdd, actualBase, actualDel, actualItens, actualMod, actualSize);
+
+    const realNovosItens = []
+    ProbeAdd.map((probeAdd) => {
+      realNovosItens.push(
+        probeAdd.actualItens,
+        probeAdd.actualSize);
+        return parseInt(realNovosItens);
     })
-
-
-    planejado.forEach(toString);
-
-    planejado.every(parseInt);
 
 
     //parseInt() converte apenas de String para Inteiro!
 
-    console.log("Planejado: " + planejado);
-    console.log("Real: " + real);
+    console.log("PlanejadoRb: " + planejadoReusoBase);
+    console.log("PlanejadoNovosItens: " + planejadoNovosItens);
+    console.log("RealNovosItens: " + realNovosItens);
 
 
 
