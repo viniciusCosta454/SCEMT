@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
-import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart as ChartJS, Element } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
 
 import "./style.css";
@@ -225,11 +225,31 @@ export default function Projeto() {
 
     // ------- SOMATÓRIO PLANEJADO VS REAL ---------
 
-    const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod +Projeto.planSize; 
-    const real = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
+    //const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod + Projeto.planSize; 
+    //const real = Projeto.probeAdd + Projeto.actualBase + Projeto.actualDel + Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
   
+    const planejado = []
+    ProbeAdd.map((planAdd, planBase, planDel, planItens, planMod, planSize) => {
+      planejado.push(planAdd, planBase, planDel, planItens, planMod, planSize);
+    })
+
+    const real = []
+    ProbeAdd.map((probeAdd, actualBase, actualDel, actualItens, actualMod, actualSize) => {
+      real.push(probeAdd, actualBase, actualDel, actualItens, actualMod, actualSize);
+    })
+
+
+    planejado.forEach(toString);
+
+    planejado.every(parseInt);
+
+
+    //parseInt() converte apenas de String para Inteiro!
+
     console.log("Planejado: " + planejado);
     console.log("Real: " + real);
+
+
 
 
 
