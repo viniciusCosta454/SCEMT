@@ -103,6 +103,7 @@ export default function Cocomo() {
                     onChange={(e) => setprecedencia(e.target.value)}
                   >
                     <option value=""></option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -119,6 +120,7 @@ export default function Cocomo() {
                     onChange={(e) => setflexibilidade(e.target.value)}
                   >
                     <option value=""></option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -135,6 +137,7 @@ export default function Cocomo() {
                     onChange={(e) => setarquitetura(e.target.value)}
                   >
                     <option value=""></option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -151,6 +154,7 @@ export default function Cocomo() {
                     onChange={(e) => setcoesao(e.target.value)}
                   >
                     <option value=""></option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -167,6 +171,7 @@ export default function Cocomo() {
                     onChange={(e) => setmaturidade(e.target.value)}
                   >
                     <option value=""></option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

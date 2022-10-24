@@ -45,7 +45,7 @@ export default function Help() {
       <header>
         <img src={logoImg} alt="Keep Flux" />
         <span>Bem vinda, {empresaName}</span>
-        <Link className="button" to="/menu">
+        <Link className="button" to="/home">
           Menu
         </Link>
 

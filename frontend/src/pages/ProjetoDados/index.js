@@ -46,20 +46,24 @@ export default function Projeto() {
 
   function defineSemanas(proj) {
     const strI = proj.dataI.replace(/\//g, "-");
-    const dateObjectI = new Date(strI);
+    const strDataI = strI.split("-")[2] + "-" + strI.split("-")[1] + "-" + strI.split("-")[0];
+    const dateObjectI = new Date(strDataI);
 
     const strF = proj.dataF.replace(/\//g, "-");
-    const dateObjectF = new Date(strF);
-    
+    const strDataF = strF.split("-")[2] + "-" + strF.split("-")[1] + "-" + strF.split("-")[0];
+    const dateObjectF = new Date(strDataF);
+
     const dias = (dateObjectF.getTime() - dateObjectI.getTime()) / (1000 * 60 * 60 * 24);
     const semanas = dias / 7;
+
     return semanas
   }
 
   function defineDatas(proj) {
 
     const strI = proj.dataI.replace(/\//g, "-");
-    const dateObjectI = new Date(strI);
+    const strDataI = strI.split("-")[2] + "-" + strI.split("-")[1] + "-" + strI.split("-")[0];
+    const dateObjectI = new Date(strDataI);
     
     const semanas = defineSemanas(proj);
     
@@ -159,12 +163,7 @@ export default function Projeto() {
     return mediana;
   }
 
-
-
-
-
-
-  function findLineByLeastSquares(prbAdd) {
+  function findLineByLeastSquares() {
     var sum_x = 0;
     var sum_y = 0;
     var sum_xy = 0;
@@ -172,29 +171,23 @@ export default function Projeto() {
     var count = 0;
     var x = 0;
     var y = 0;
-     
 
     const dadosEixoY1 = [];
-    prbAdd.map((probeAdd) => {
+    ProbeAdd.map((probeAdd) => {
       dadosEixoY1.push(probeAdd.actualSize);
+      return dadosEixoY1;
     })
 
     const dadosEixoY2 = [];
-    prbAdd.map((planAdd) => {
+    ProbeAdd.map((planAdd) => {
       dadosEixoY2.push(planAdd.actualSize);
+      return dadosEixoY2;
     })
 
-    console.log(dadosEixoY1);
-    console.log(dadosEixoY2);
+    console.log('Eixo1', dadosEixoY1);
+    console.log('Eixo2', dadosEixoY2);
 
 
-    if (dadosEixoY1 != dadosEixoY2) {
-        throw new Error('The parameters values_x and values_y need to have same size!');
-    }
-
-    if (dadosEixoY1 === 0) {
-        return [ [], [] ];
-    }
     
     //Calculate the sum for each of the parts necessary.
     
@@ -228,9 +221,11 @@ export default function Projeto() {
     }
 
     return [result_values_x, result_values_y];
-}
+  }
 
-
+  useEffect(() => {
+    console.log('Probe', ProbeAdd)
+  }, [ProbeAdd])
 
   return (
     <div className="profile-container">
@@ -279,10 +274,7 @@ export default function Projeto() {
                         Adicionar novos itens para o Probe
                       </Link>
                       <Link className="button" to="/cocomo">
-                        COCOMO
-                      </Link>
-                      <Link className="button" to="/">
-                        GERAR GRÁFICO
+                        Adicionar escalas para o Cocomo
                       </Link>
                     </li>
                   </div>
@@ -313,13 +305,9 @@ export default function Projeto() {
                       <tbody className="bodyBase">
                         <tr>
                           <td>
-                            {ProbeRb.baseName !== undefined
-                              ? ProbeRb.baseName
-                              : "Cadastre"}
+                            {ProbeRb?.baseName}
                           </td>
-                          <td>{ProbeRb.planBase !== undefined
-                              ? ProbeRb.planBase
-                              : "nulo"}</td>
+                          <td>{ProbeRb?.planBase}</td>
                           <td>{ProbeRb?.planDel}</td>
                           <td>{ProbeRb?.planMod}</td>
                           <td>{ProbeRb?.planAdd}</td>
@@ -339,7 +327,7 @@ export default function Projeto() {
                       </thead>
                       <tbody className="bodyBase">
                         <tr>
-                          <td>{ProbeRb.reusedName}</td>
+                          <td>{ProbeRb?.reusedName}</td>
                           <td colSpan={2}>{ProbeRb?.plan}</td>
                           <td colSpan={2}>{ProbeRb?.actual}</td>
                         </tr>
@@ -371,7 +359,7 @@ export default function Projeto() {
                             <tr>
                               <td colSpan={2}>{probeAdd.addedName}</td>
                               <td colSpan={2}>{probeAdd.partType}</td>
-                              <td>{probeAdd?.planItens}</td>
+                              <td>{probeAdd.planItens}</td>
                               <td>{probeAdd.planRelSz}</td>
                               <td>{probeAdd.planSize}</td>
                               <td>{probeAdd.actualItens}</td>
@@ -415,7 +403,7 @@ export default function Projeto() {
                         </tr>
                         <tr>
                           <td colSpan={3}>PM Necessário</td>
-                          <td colSpan={1}>{((Cocomo.precedencia + Cocomo.flexibilidade + Cocomo.arquitetura + Cocomo.coesao + Cocomo.maturidade) / 100) + 1.01 + " Mês"}</td>
+                          <td colSpan={1}>{((Cocomo?.precedencia + Cocomo?.flexibilidade + Cocomo?.arquitetura + Cocomo?.coesao + Cocomo?.maturidade) / 100) + 1.01 + " Mês"}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -434,13 +422,13 @@ export default function Projeto() {
                           data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
                           backgroundColor: '#ff000088',
                           borderColor: '#ff000088'
-                          },
-                          {
-                            label: 'RL Probe Victor',
-                            data: findLineByLeastSquares(ProbeAdd),
-                            backgroundColor: '#dd222288',
-                            borderColor: '#dd222288'
-                            }]
+                        },
+                        {
+                          label: 'RL Probe Victor',
+                          data: findLineByLeastSquares(),
+                          backgroundColor: '#dd222288',
+                          borderColor: '#dd222288'
+                        }]
                       }}
                       width={300}
                       height={100}
