@@ -64,9 +64,9 @@ export default function Projeto() {
     const strI = proj.dataI.replace(/\//g, "-");
     const strDataI = strI.split("-")[2] + "-" + strI.split("-")[1] + "-" + strI.split("-")[0];
     const dateObjectI = new Date(strDataI);
-    
+
     const semanas = defineSemanas(proj);
-    
+
     const umaSemana = (1000 * 60 * 60 * 24 * 7);
     const currentDate = new Date();
     currentDate.setTime(dateObjectI.getTime());
@@ -75,7 +75,7 @@ export default function Projeto() {
 
     for (let index = 0; index < semanas; index++) {
       currentDate.setTime(currentDate.getTime() + umaSemana);
-      eixoXdias.push(currentDate.getDate() + "/" + (currentDate.getMonth() + 1)  + "/" + currentDate.getFullYear());
+      eixoXdias.push(currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear());
     }
     return eixoXdias;
   }
@@ -89,54 +89,56 @@ export default function Projeto() {
     return data;
   }
 
-  function calculaMediana(dados){
+  function calculaMediana(dados) {
     var valIni = 0;
     var valFim = 0;
-    if (dados.length>1) {
+    if (dados.length > 1) {
       var d1 = dados[0];
       var d2 = dados[1];
-      var d3 = dados[dados.length-1];
-      valIni = parseInt((d1-d2)/2)+parseInt(d2);
-      valFim = parseInt((d1-d3)/2)+parseInt(d3);
-      
+      var d3 = dados[dados.length - 1];
+      valIni = parseInt((d1 - d2) / 2) + parseInt(d2);
+      valFim = parseInt((d1 - d3) / 2) + parseInt(d3);
+
     }
     const semanas = dados.length;
 
-    const passo = (valFim-valIni)/semanas;
+    const passo = (valFim - valIni) / semanas;
     var data = [];
     var p = valIni;
     for (let index = 0; index < semanas; index++) {
       data.push(p);
-      p = p+passo;
+      p = p + passo;
     }
     return data;
   }
 
-    //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
+  //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
 
-    //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
+  //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
 
-    var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
+  var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
 
-    //Upper "E" means Effort
-    //Beta0(E) -> Estimado
-    //Beta1(E) -> Realizado
+  //Upper "E" means Effort
+  //Beta0(E) -> Estimado
+  //Beta1(E) -> Realizado
 
-    //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
+  //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
 
-    //var locNovasModificadas = findLineByLeastSquares(locEstimado, defineDatas(Projeto));
+  var locNovasModificadas = findLineByLeastSquares(locEstimado);
 
-    //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
+  //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
 
-    var totalEffortE = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
+  var esforcoTotal = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
 
-    //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
+  var totalEffortE = findLineByLeastSquares(esforcoTotal);
 
-    var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
+  //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
 
-    //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
+  var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
 
-    //var estimatedDevTime = findLineByLeastSquares(totalNewReusable, defineDatas(Projeto));
+  //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
+
+  var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
 
 
 
@@ -147,12 +149,12 @@ export default function Projeto() {
     const valIni = 0;
     const valFim = 50;
     const semanas = defineSemanas(proj);
-    const passo = (valFim-valIni)/semanas;
+    const passo = (valFim - valIni) / semanas;
     var data = [];
     var p = valIni;
     for (let index = 0; index < semanas; index++) {
       data.push(p);
-      p = p+passo;
+      p = p + passo;
     }
     var dados = plotaItensProbe(prbAdd);
     var eixoX = []
@@ -163,7 +165,7 @@ export default function Projeto() {
     return mediana;
   }
 
-  function findLineByLeastSquares() {
+  function findLineByLeastSquares(grandeza) {
     var sum_x = 0;
     var sum_y = 0;
     var sum_xy = 0;
@@ -184,16 +186,78 @@ export default function Projeto() {
       return dadosEixoY2;
     })
 
-    console.log('Eixo1', dadosEixoY1);
-    console.log('Eixo2', dadosEixoY2);
-
-
-    
     //Calculate the sum for each of the parts necessary.
-    
+
     for (var v = 0; v < dadosEixoY1.length; v++) {
-        x = dadosEixoY1[v];
-        y = dadosEixoY2[v];
+      x = dadosEixoY1[v];
+      y = dadosEixoY2[v];
+      sum_x += x;
+      sum_y += y;
+      sum_xx += x * x;
+      sum_xy += x * y;
+      count++;
+    }
+
+    //Calculate m and b for the formular y = x * m + b.
+
+    var m = (count * sum_xy - sum_x * sum_y) / (count * sum_xx - sum_x * sum_x);
+    var b = (sum_y / count) - (m * sum_x) / count;
+
+
+    //We will make the x and y result line now.
+
+    var result_values_x = [];
+    var result_values_y = [];
+
+    for (var v = 0; v < dadosEixoY1.length; v++) {
+      x = dadosEixoY1[v];
+      y = x * m + b;
+      result_values_x.push(x);
+      result_values_y.push(y);
+    }
+
+
+    console.log("result_values_x: " + result_values_x);
+    console.log("result_values_y: " + result_values_y);
+
+    return [result_values_x, result_values_y];
+  }
+
+    // ------- SOMATÓRIO PLANEJADO VS REAL ---------
+
+    const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod +Projeto.planSize; 
+    const real = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
+  
+    console.log("Planejado: " + planejado);
+    console.log("Real: " + real);
+
+
+
+  function findLineByLeastSquares2(values_x, values_y) {
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_xx = 0;
+    var count = 0;
+
+
+    var x = 0;
+    var y = 0;
+    var values_length = values_x.length;
+
+    /*if (values_length != values_y.length) {
+        throw new Error('The parameters values_x and values_y need to have same size!');
+    }*/
+
+
+    /*if (values_length === 0) {
+        return [ [], [] ];
+    }*/
+
+
+    for (var v = 0; v < values_length; v++) {
+        x = values_x[v];
+        y = values_y[v];
         sum_x += x;
         sum_y += y;
         sum_xx += x*x;
@@ -201,31 +265,24 @@ export default function Projeto() {
         count++;
     }
 
-  
-    //Calculate m and b for the formular y = x * m + b.
 
     var m = (count*sum_xy - sum_x*sum_y) / (count*sum_xx - sum_x*sum_x);
     var b = (sum_y/count) - (m*sum_x)/count;
 
-  
-    //We will make the x and y result line now.
-    
+
     var result_values_x = [];
     var result_values_y = [];
 
-    for (var v = 0; v < dadosEixoY1.length; v++) {
-        x = dadosEixoY1[v];
+    for (var v = 0; v < values_length; v++) {
+        x = values_x[v];
         y = x * m + b;
         result_values_x.push(x);
         result_values_y.push(y);
     }
 
     return [result_values_x, result_values_y];
-  }
+}
 
-  useEffect(() => {
-    console.log('Probe', ProbeAdd)
-  }, [ProbeAdd])
 
   return (
     <div className="profile-container">
@@ -380,7 +437,7 @@ export default function Projeto() {
                         </tr>
                       </thead>
                       <tbody className="bodyCocomo">
-                        
+
                         <tr>
                           <td colSpan={3}>Precedência</td>
                           <td colSpan={1}>{Cocomo?.precedencia}</td>
@@ -410,35 +467,53 @@ export default function Projeto() {
                     <Chart
                       type='line'
                       data={{
-                      labels: defineDatas(Projeto),
-                      datasets: [{
-                        label: 'LOCs adicionadas',
-                        data: plotaItensProbe(ProbeAdd),
-                        backgroundColor: '#0000ff88',
-                        borderColor: '#0000ff88'
+                        labels: defineDatas(Projeto),
+                        datasets: [{
+                          label: 'LOCs adicionadas',
+                          data: plotaItensProbe(ProbeAdd),
+                          backgroundColor: '#0000FF88',
+                          borderColor: '#0000FF'
                         },
                         {
-                          label: 'RL Probe',
+                          label: 'Mediatriz Esforço',
                           data: plotaRlProbe(Projeto, ProbeRb, ProbeAdd),
-                          backgroundColor: '#ff000088',
-                          borderColor: '#ff000088'
+                          backgroundColor: '#00BFFF88',
+                          borderColor: '#00BFFF'
                         },
                         {
-                          label: 'RL Probe Victor',
-                          data: findLineByLeastSquares(),
-                          backgroundColor: '#dd222288',
-                          borderColor: '#dd222288'
-                        }]
+                          label: 'Probe Effort',
+                          data: findLineByLeastSquares(esforcoTotal),
+                          backgroundColor: '#9932CC88',
+                          borderColor: '#9932CC'
+                        },
+                        {
+                          label: 'Probe Effort 2',
+                          data: findLineByLeastSquares2(esforcoTotal),
+                          backgroundColor: '#9932CC88',
+                          borderColor: '#9932CC'
+                        }/*,
+                        {
+                          label: 'ETA',
+                          data: estimatedDevTime,
+                          backgroundColor: '#DC143C88',
+                          borderColor: '#DC143C'
+                        },
+                        {
+                          label: 'Total Effort',
+                          data: totalEffortE,
+                          backgroundColor: '#80800088',
+                          borderColor: '#808000'
+                        }*/]
                       }}
                       width={300}
                       height={100}
                       options={{
-                          maintainAspectRatio: true,
+                        maintainAspectRatio: true,
                       }}
                     />
                   </div>
                 </ul>
-                
+
               </div>
             );
           }
