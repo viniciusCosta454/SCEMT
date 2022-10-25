@@ -112,33 +112,7 @@ export default function Projeto() {
     return data;
   }
 
-  //Abrir uma tabela com campos para os seguintes itens a serem exibidos:
 
-  //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
-
-  var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
-
-  //Upper "E" means Effort
-  //Beta0(E) -> Estimado
-  //Beta1(E) -> Realizado
-
-  //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
-
-  var locNovasModificadas = findLineByLeastSquares(locEstimado);
-
-  //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
-
-  var esforcoTotal = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
-
-  var totalEffortE = findLineByLeastSquares(esforcoTotal);
-
-  //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
-
-  var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
-
-  //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
-
-  var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
 
 
 
@@ -217,8 +191,8 @@ export default function Projeto() {
     }
 
 
-    console.log("result_values_x: " + result_values_x);
-    console.log("result_values_y: " + result_values_y);
+    //console.log("result_values_x: " + result_values_x);
+    //console.log("result_values_y: " + result_values_y);
 
     return [result_values_x, result_values_y];
   }
@@ -261,17 +235,7 @@ export default function Projeto() {
     })
 
 
-    //parseInt() converte apenas de String para Inteiro!
-
-    console.log("PlanejadoRb: " + planejadoReusoBase);
-    console.log("PlanejadoNovosItens: " + planejadoNovosItens);
-    console.log("RealNovosItens: " + realNovosItens);
-
-
-
-
-
-  function findLineByLeastSquares2(values_x, values_y) {
+  function findLineByLeastSquares2(planejadoNovosItens, realNovosItens) {
     var sum_x = 0;
     var sum_y = 0;
     var sum_xy = 0;
@@ -281,21 +245,21 @@ export default function Projeto() {
 
     var x = 0;
     var y = 0;
-    var values_length = values_x.length;
+    var values_length = planejadoNovosItens.length;
 
-    /*if (values_length != values_y.length) {
+    if (values_length != realNovosItens.length) {
         throw new Error('The parameters values_x and values_y need to have same size!');
-    }*/
+    }
 
 
-    /*if (values_length === 0) {
+    if (values_length === 0) {
         return [ [], [] ];
-    }*/
+    }
 
 
     for (var v = 0; v < values_length; v++) {
-        x = values_x[v];
-        y = values_y[v];
+        x = planejadoNovosItens[v];
+        y = realNovosItens[v];
         sum_x += x;
         sum_y += y;
         sum_xx += x*x;
@@ -312,13 +276,60 @@ export default function Projeto() {
     var result_values_y = [];
 
     for (var v = 0; v < values_length; v++) {
-        x = values_x[v];
+        x = planejadoNovosItens[v];
         y = x * m + b;
         result_values_x.push(x);
         result_values_y.push(y);
     }
 
-    return [result_values_x, result_values_y];
+    //var firstMax = Math.max(result_values_y);
+		//console.log("firstMax: " + firstMax);
+
+
+    var result_values_y2 = result_values_y;
+
+
+		Math.min(result_values_y2.sort((a,b) => a-b));
+		const secondMin = result_values_y2;
+		console.log("secondMin: " + secondMin);
+
+
+    //console.log("result_values_x: " + result_values_x);
+    //console.log("result_values_y: " + result_values_y);
+    //console.log("y: " + y);
+    //console.log("x: " + x);
+    //console.log("m: " + m);
+    //console.log("b: " + b);
+
+
+    //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
+
+    var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
+
+    //Upper "E" means Effort
+    //Beta0(E) -> Estimado
+    //Beta1(E) -> Realizado
+
+    //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
+
+    var locNovasModificadas = findLineByLeastSquares(locEstimado);
+
+    //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
+
+    var esforcoTotal = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
+
+    var totalEffortE = findLineByLeastSquares(esforcoTotal);
+
+    //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
+
+    var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
+
+    //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
+
+    var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
+
+    //return [result_values_x, result_values_y];
+    return [secondMin[3], secondMin[secondMin.length - 1]]; // TO-DO Tratar Valor Inicial!!!
 }
 
 
@@ -520,13 +531,7 @@ export default function Projeto() {
                         },
                         {
                           label: 'Probe Effort',
-                          data: findLineByLeastSquares(esforcoTotal),
-                          backgroundColor: '#9932CC88',
-                          borderColor: '#9932CC'
-                        },
-                        {
-                          label: 'Probe Effort 2',
-                          data: findLineByLeastSquares2(esforcoTotal),
+                          data: findLineByLeastSquares2(planejadoNovosItens, realNovosItens),
                           backgroundColor: '#9932CC88',
                           borderColor: '#9932CC'
                         }/*,
@@ -535,6 +540,12 @@ export default function Projeto() {
                           data: estimatedDevTime,
                           backgroundColor: '#DC143C88',
                           borderColor: '#DC143C'
+                        },
+                        {
+                          label: 'Probe Effort',
+                          data: findLineByLeastSquares(esforcoTotal),
+                          backgroundColor: '#9932CC88',
+                          borderColor: '#9932CC'
                         },
                         {
                           label: 'Total Effort',
