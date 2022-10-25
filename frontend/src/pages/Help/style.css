@@ -40,48 +40,34 @@
     margin-top: 80px;
     margin-bottom: 24px;
 }
-.help ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap : 24px;
-    list-style: none;
-}
-.help ul li {
+
+.lista {
     background: #FFF;
-    padding: 24px;
+    padding: 20px;
     border-radius: 8px;
     position: relative;
+    margin-top: 50px;
 }
-.help ul li button {
-    position: absolute;
-    right: 24px;
-    top: 24px;
-    border: 0;
-    transition: border-color 0.2s;
-}
-.help ul li .button2 {
-    position: absolute;
-    right: 54px;
-    top: 24px;
-    border: 0;
-    transition: border-color 0.2s;
-}
-.help ul li button:hover{
-    opacity:0.8
-}
-.help ul li strong {
+
+
+
+
+.lista strong {
     display: block;
-    margin-bottom: 16px;
-    color: #41414d;
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: black;
 }
-.help ul li p + strong{
+.lista p + strong{
     margin-top : 32px ;
 }
-.help ul li p {
-    color: #737380;
+.lista p {
+    color: #41414d;
     line-height : 21px;
-    font-size : 16px;
+    font-size : 18px;
 }
 .helpimg {
-    width: 500px;
+    margin-top: 20px;
+    width: 1080px;
+    border-radius: 8px;
 }

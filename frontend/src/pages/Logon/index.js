@@ -23,7 +23,7 @@ export default function Logon() {
       localStorage.setItem("nomeEmpresa", response.data.name)
       console.log(response.data.name)
 
-      history.push("menu")
+      history.push("projetos")
 
     } catch (error) {
       alert("Falha no login, tente novamente")
@@ -33,17 +33,19 @@ export default function Logon() {
   return (
     <div className="logon-container">
       <section className="form">
-      <img src={logoImg} className="imgLogo" alt="Keep-Flux"></img>
+      <img src={logoImg} className="LogoLogin" alt="SCEMT"></img>
       <form onSubmit={handleLogin}>
           <h1>Faça seu Login</h1>
-          <input placeholder="Seu ID"
+          <input placeholder="Digite seu ID"
             value={id}
             onChange={e => setId(e.target.value)}
           />
           <button className="button" type="submit">Entrar</button>
         </form>
       </section>
-      <img src={heroImg} alt="Heros"/>
+      <img src={heroImg} className="imgHero" alt="Heros"/>
+    
     </div>
+    
   );
 }
