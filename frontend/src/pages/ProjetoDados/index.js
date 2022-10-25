@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiPower } from "react-icons/fi";
+// eslint-disable-next-line
 import { Chart as ChartJS, Element } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
 
@@ -81,7 +82,9 @@ export default function Projeto() {
   }
 
   function plotaItensProbe(prbAdd) {
+    // eslint-disable-next-line
     const data = []
+    // eslint-disable-next-line
     prbAdd.map((probeAdd) => {
       data.push(probeAdd.actualSize);
     })
@@ -139,63 +142,63 @@ export default function Projeto() {
     return mediana;
   }
 
-  function findLineByLeastSquares(grandeza) {
-    var sum_x = 0;
-    var sum_y = 0;
-    var sum_xy = 0;
-    var sum_xx = 0;
-    var count = 0;
-    var x = 0;
-    var y = 0;
+  // function findLineByLeastSquares(grandeza) {
+  //   var sum_x = 0;
+  //   var sum_y = 0;
+  //   var sum_xy = 0;
+  //   var sum_xx = 0;
+  //   var count = 0;
+  //   var x = 0;
+  //   var y = 0;
 
-    const dadosEixoY1 = [];
-    ProbeAdd.map((probeAdd) => {
-      dadosEixoY1.push(probeAdd.actualSize);
-      return dadosEixoY1;
-    })
+  //   const dadosEixoY1 = [];
+  //   ProbeAdd.map((probeAdd) => {
+  //     dadosEixoY1.push(probeAdd.actualSize);
+  //     return dadosEixoY1;
+  //   })
 
-    const dadosEixoY2 = [];
-    ProbeAdd.map((planAdd) => {
-      dadosEixoY2.push(planAdd.actualSize);
-      return dadosEixoY2;
-    })
+  //   const dadosEixoY2 = [];
+  //   ProbeAdd.map((planAdd) => {
+  //     dadosEixoY2.push(planAdd.actualSize);
+  //     return dadosEixoY2;
+  //   })
 
-    //Calculate the sum for each of the parts necessary.
+  //   //Calculate the sum for each of the parts necessary.
 
-    for (var v = 0; v < dadosEixoY1.length; v++) {
-      x = dadosEixoY1[v];
-      y = dadosEixoY2[v];
-      sum_x += x;
-      sum_y += y;
-      sum_xx += x * x;
-      sum_xy += x * y;
-      count++;
-    }
+  //   for (var v = 0; v < dadosEixoY1.length; v++) {
+  //     x = dadosEixoY1[v];
+  //     y = dadosEixoY2[v];
+  //     sum_x += x;
+  //     sum_y += y;
+  //     sum_xx += x * x;
+  //     sum_xy += x * y;
+  //     count++;
+  //   }
 
-    //Calculate m and b for the formular y = x * m + b.
+  //   //Calculate m and b for the formular y = x * m + b.
 
-    var m = (count * sum_xy - sum_x * sum_y) / (count * sum_xx - sum_x * sum_x);
-    var b = (sum_y / count) - (m * sum_x) / count;
-
-
-    //We will make the x and y result line now.
-
-    var result_values_x = [];
-    var result_values_y = [];
-
-    for (var v = 0; v < dadosEixoY1.length; v++) {
-      x = dadosEixoY1[v];
-      y = x * m + b;
-      result_values_x.push(x);
-      result_values_y.push(y);
-    }
+  //   var m = (count * sum_xy - sum_x * sum_y) / (count * sum_xx - sum_x * sum_x);
+  //   var b = (sum_y / count) - (m * sum_x) / count;
 
 
-    //console.log("result_values_x: " + result_values_x);
-    //console.log("result_values_y: " + result_values_y);
+  //   //We will make the x and y result line now.
 
-    return [result_values_x, result_values_y];
-  }
+  //   var result_values_x = [];
+  //   var result_values_y = [];
+
+  //   for (v = 0; v < dadosEixoY1.length; v++) {
+  //     x = dadosEixoY1[v];
+  //     y = x * m + b;
+  //     result_values_x.push(x);
+  //     result_values_y.push(y);
+  //   }
+
+
+  //   //console.log("result_values_x: " + result_values_x);
+  //   //console.log("result_values_y: " + result_values_y);
+
+  //   return [result_values_x, result_values_y];
+  // }
 
   // ------- SOMATÓRIO PLANEJADO VS REAL ---------
 
@@ -247,7 +250,7 @@ export default function Projeto() {
     var y = 0;
     var values_length = planejadoNovosItens.length;
 
-    if (values_length != realNovosItens.length) {
+    if (values_length !== realNovosItens.length) {
       throw new Error('The parameters values_x and values_y need to have same size!');
     }
 
@@ -275,7 +278,7 @@ export default function Projeto() {
     var result_values_x = [];
     var result_values_y = [];
 
-    for (var v = 0; v < values_length; v++) {
+    for (v = 0; v < values_length; v++) {
       x = planejadoNovosItens[v];
       y = x * m + b;
       result_values_x.push(x);
@@ -307,7 +310,7 @@ export default function Projeto() {
 
     //1 - LOC Estimado = (Itens Base Adicionados) + (Novos Itens Adicionados) + (Itens Modificados)
 
-    var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
+    //var locEstimado = Projeto.actualBase + Projeto.actualAdd + Projeto.actualMod;
 
     //Upper "E" means Effort
     //Beta0(E) -> Estimado
@@ -315,21 +318,21 @@ export default function Projeto() {
 
     //2 - Estimativa de Novas e Modificadas = B0 + B1 * LOC Estimado
 
-    var locNovasModificadas = findLineByLeastSquares(locEstimado);
+    //var locNovasModificadas = findLineByLeastSquares(locEstimado);
 
     //3 - Estimativa Total de Esforço = Itens Novos + Itens Base - Itens Deletados - Itens Modificados + Itens Reutilizados
 
-    var esforcoTotal = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
+    //var esforcoTotal = Projeto.probeAdd + Projeto.actualBase - Projeto.actualDel - Projeto.actualMod + Projeto.probe_reused;
 
-    var totalEffortE = findLineByLeastSquares(esforcoTotal);
+    //var totalEffortE = findLineByLeastSquares(esforcoTotal);
 
     //4 - Total estimado para novas e reutilizáveis (Sem Base, Deletado e Modificado)
 
-    var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
+    //var totalNewReusable = Projeto.probeAdd + Projeto.probe_reused;
 
     //5 - Tempo estimado de desenvolvimento = B0 + B1 * Item 4
 
-    var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
+    //var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
 
     //return [result_values_x, result_values_y];
     //return [result_values_y3[1], secondMin[secondMin.length - 1]];

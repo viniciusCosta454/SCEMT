@@ -25,6 +25,8 @@ import imagem21 from "./imagens/21.png";
 import imagem22 from "./imagens/22.png";
 import imagem23 from "./imagens/23.png";
 import imagem24 from "./imagens/24.png";
+import imagem25 from "./imagens/25.png";
+import imagem26 from "./imagens/26.png";
 
 import "./style.css";
 
@@ -166,77 +168,91 @@ export default function Help() {
         <img src={imagem15} className="helpimg" alt="Keep Flux" />
       </div>
       <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem16} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem17} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem18} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem19} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem20} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem21} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem22} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem23} className="helpimg" alt="Keep Flux" />
-      </div>
-      <div className="lista">
-        <strong>MENU DO SISTEMA:</strong>
-        <p>
-          Nessa página vai ser possível verificar todas as funcionadivdades que
-          o sistema oferece para o usuário do sistema
-        </p>
-        <img src={imagem24} className="helpimg" alt="Keep Flux" />
-      </div>
+      <strong>CADASTRAR ITENS DE REUSO E BASE PARA O PROBE</strong>
+         <p>
+           
+           Para cadastrar itens de reuso e base para o probe é necessário seguir os comandos como a imagem a seguir:
+         </p>
+         <img src={imagem16} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR ITENS DE REUSO E BASE PARA O PROBE</strong>
+         <p>
+         Para cadastrar itens de reuso e base para o probe é necessário seguir os comandos como a imagem a seguir:
+         </p>
+         <img src={imagem17} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR NOVOS ITENS NO PROBE</strong>
+         <p>
+           Para cadastrar novos itens no probe siga os comando na imagem a seguir:
+
+         </p>
+         <img src={imagem18} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR NOVOS ITENS NO PROBE</strong>
+         <p>
+           Para cadastrar novos itens no probe siga os comando na imagem a seguir:
+
+         </p>
+         <img src={imagem19} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR NOVOS ITENS NO PROBE</strong>
+         <p>
+           Para cadastrar novos itens no probe siga os comando na imagem a seguir:
+
+         </p>
+         <img src={imagem20} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR NOVOS ITENS NO PROBE</strong>
+         <p>
+           Para cadastrar novos itens no probe siga os comando na imagem a seguir:
+
+         </p>
+         <img src={imagem21} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR ESCALA PARA A TABELA COCOMO</strong>
+         <p>
+           Para cadastrar uma escala para as descrições do cocomo basta seguir os comandos da imagem a seguir:
+
+         </p>
+         <img src={imagem22} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>CADASTRAR ESCALA PARA A TABELA COCOMO</strong>
+         <p>
+           Para cadastrar uma escala para as descrições do cocomo basta seguir os comandos da imagem a seguir:
+
+         </p>
+         <img src={imagem23} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>TELA DE DADOS DO PROJETO PREENCHIDA</strong>
+         <p>
+           Nessa página vai ser possível verificar todas os dados preenchidos anteriormente.
+         </p>
+         <img src={imagem24} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>PEOPLE MONTH "PM"</strong>
+         <p>
+           Após preencher a tabela do COCOMO nosso sistema irá calcular o PM do seu projeto e listar como na imagem a seguir:
+         </p>
+         <img src={imagem25} className="helpimg" alt="Keep Flux" />
+       </div>
+       <div className="lista">
+         <strong>GRÁFICO PROBE</strong>
+         <p>
+           Após preencher a tabela do PROBE nosso sistema irá plotar um gráfico com 3 informações diferentes,
+           primeiro temos todas as LOCs Adicionadas e então o sistema calcula uma mediatriz dessas LOCs, e por último temos
+           a curva de esforço do PROBE que se da por uma regressão linear assim como é mostrado na imagem a seguir:
+         </p>
+         <img src={imagem26} className="helpimg" alt="Keep Flux" />
+       </div>
     </div>
   );
 }
