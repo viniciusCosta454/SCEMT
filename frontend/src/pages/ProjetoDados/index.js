@@ -197,45 +197,45 @@ export default function Projeto() {
     return [result_values_x, result_values_y];
   }
 
-    // ------- SOMATÓRIO PLANEJADO VS REAL ---------
+  // ------- SOMATÓRIO PLANEJADO VS REAL ---------
 
-    //const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod + Projeto.planSize; 
-    //const real = Projeto.probeAdd + Projeto.actualBase + Projeto.actualDel + Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
-  
-    const planejadoReusoBase = [
-      ProbeRb?.planBase,
-      ProbeRb?.planDel,
-      ProbeRb?.planMod,
-      ProbeRb?.planAdd,
-      //Projeto.ProbeRb?.actualBase,
-      //Projeto.ProbeRb?.actualDel,
-      //Projeto.ProbeRb?.actualMod,
-      //Projeto.ProbeRb?.actualAdd,
-      ProbeRb?.plan]
-      //Projeto.ProbeRb?.actual]
-      parseInt(planejadoReusoBase);
+  //const planejado = Projeto.planAdd + Projeto.planBase + Projeto.planDel + Projeto.planItens + Projeto.planMod + Projeto.planSize; 
+  //const real = Projeto.probeAdd + Projeto.actualBase + Projeto.actualDel + Projeto.actualItens + Projeto.actualMod + Projeto.actualSize;
 
-
-
-    const planejadoNovosItens = []
-    ProbeAdd.map((probeAdd) => {
-      planejadoNovosItens.push(
-        probeAdd.planItens,
-        probeAdd.planSize);
-      return parseInt(planejadoNovosItens);
-    })
+  const planejadoReusoBase = [
+    ProbeRb?.planBase,
+    ProbeRb?.planDel,
+    ProbeRb?.planMod,
+    ProbeRb?.planAdd,
+    //Projeto.ProbeRb?.actualBase,
+    //Projeto.ProbeRb?.actualDel,
+    //Projeto.ProbeRb?.actualMod,
+    //Projeto.ProbeRb?.actualAdd,
+    ProbeRb?.plan]
+  //Projeto.ProbeRb?.actual]
+  parseInt(planejadoReusoBase);
 
 
-    const realNovosItens = []
-    ProbeAdd.map((probeAdd) => {
-      realNovosItens.push(
-        probeAdd.actualItens,
-        probeAdd.actualSize);
-        return parseInt(realNovosItens);
-    })
+
+  const planejadoNovosItens = []
+  ProbeAdd.map((probeAdd) => {
+    planejadoNovosItens.push(
+      probeAdd.planItens,
+      probeAdd.planSize);
+    return parseInt(planejadoNovosItens);
+  })
 
 
-  function findLineByLeastSquares2(planejadoNovosItens, realNovosItens) {
+  const realNovosItens = []
+  ProbeAdd.map((probeAdd) => {
+    realNovosItens.push(
+      probeAdd.actualItens,
+      probeAdd.actualSize);
+    return parseInt(realNovosItens);
+  })
+
+
+  function findLineByLeastSquares2(proj, planejadoNovosItens, realNovosItens) {
     var sum_x = 0;
     var sum_y = 0;
     var sum_xy = 0;
@@ -248,51 +248,54 @@ export default function Projeto() {
     var values_length = planejadoNovosItens.length;
 
     if (values_length != realNovosItens.length) {
-        throw new Error('The parameters values_x and values_y need to have same size!');
+      throw new Error('The parameters values_x and values_y need to have same size!');
     }
 
 
     if (values_length === 0) {
-        return [ [], [] ];
+      return [[], []];
     }
 
 
     for (var v = 0; v < values_length; v++) {
-        x = planejadoNovosItens[v];
-        y = realNovosItens[v];
-        sum_x += x;
-        sum_y += y;
-        sum_xx += x*x;
-        sum_xy += x*y;
-        count++;
+      x = planejadoNovosItens[v];
+      y = realNovosItens[v];
+      sum_x += x;
+      sum_y += y;
+      sum_xx += x * x;
+      sum_xy += x * y;
+      count++;
     }
 
 
-    var m = (count*sum_xy - sum_x*sum_y) / (count*sum_xx - sum_x*sum_x);
-    var b = (sum_y/count) - (m*sum_x)/count;
+    var m = (count * sum_xy - sum_x * sum_y) / (count * sum_xx - sum_x * sum_x);
+    var b = (sum_y / count) - (m * sum_x) / count;
 
 
     var result_values_x = [];
     var result_values_y = [];
 
     for (var v = 0; v < values_length; v++) {
-        x = planejadoNovosItens[v];
-        y = x * m + b;
-        result_values_x.push(x);
-        result_values_y.push(y);
+      x = planejadoNovosItens[v];
+      y = x * m + b;
+      result_values_x.push(x);
+      result_values_y.push(y);
     }
 
     //var firstMax = Math.max(result_values_y);
-		//console.log("firstMax: " + firstMax);
+    //console.log("firstMax: " + firstMax);
 
 
     var result_values_y2 = result_values_y;
 
 
-		Math.min(result_values_y2.sort((a,b) => a-b));
-		const secondMin = result_values_y2;
-		console.log("secondMin: " + secondMin);
+    Math.min(result_values_y2.sort((a, b) => a - b));
+    const secondMin = result_values_y2;
+    //console.log("secondMin: " + secondMin);
 
+
+    var result_values_y3 = [...new Set(result_values_y2)];
+    //console.log("result_values_y3: " + result_values_y3);
 
     //console.log("result_values_x: " + result_values_x);
     //console.log("result_values_y: " + result_values_y);
@@ -329,8 +332,20 @@ export default function Projeto() {
     var estimatedDevTime = findLineByLeastSquares(totalNewReusable);
 
     //return [result_values_x, result_values_y];
-    return [secondMin[3], secondMin[secondMin.length - 1]]; // TO-DO Tratar Valor Inicial!!!
-}
+    //return [result_values_y3[1], secondMin[secondMin.length - 1]];
+
+
+    var semanas = defineSemanas(proj) - 1;
+    var passo = (secondMin[secondMin.length - 1] - result_values_y3[1]) / semanas;
+    const pontos = [];
+    var p = result_values_y3[1];
+    pontos.push(p);
+    for (let index = 0; index < semanas; index++) {
+      p = p + passo;
+      pontos.push(p);
+    }
+    return pontos;
+  }
 
 
   return (
@@ -531,7 +546,7 @@ export default function Projeto() {
                         },
                         {
                           label: 'Probe Effort',
-                          data: findLineByLeastSquares2(planejadoNovosItens, realNovosItens),
+                          data: findLineByLeastSquares2(Projeto, planejadoNovosItens, realNovosItens),
                           backgroundColor: '#9932CC88',
                           borderColor: '#9932CC'
                         }/*,
