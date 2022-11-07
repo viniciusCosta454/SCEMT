@@ -339,11 +339,11 @@ export default function Projeto() {
 
 
     var semanas = defineSemanas(proj) - 1;
-    var passo = (secondMin[secondMin.length - 1] - result_values_y3[1]) / semanas;
+    var passo = (secondMin[secondMin.length - 1] * 10 - (result_values_y3[1]) / semanas) * 10;
     const pontos = [];
     var p = result_values_y3[1];
     pontos.push(p);
-    for (let index = 0; index < semanas; index++) {
+    for (let index = 0; index < semanas -1; index++) {
       p = p + passo;
       pontos.push(p);
     }
