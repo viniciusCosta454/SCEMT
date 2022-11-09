@@ -37,11 +37,26 @@ export default function ProbeAdd() {
   async function ProbeAdd(e) {
     e.preventDefault();
 
+    let relativeSize = "";
+    let planSizeTransformed = Number(planSize);
+
+    if (planSizeTransformed <= 20) {
+      relativeSize = "VS"
+    } else if (20 < planSizeTransformed && planSizeTransformed <= 50) {
+      relativeSize = "S"
+    } else if (50 < planSizeTransformed && planSizeTransformed <= 80) {
+      relativeSize = "M"
+    } else if (80 < planSizeTransformed && planSizeTransformed <= 150) {
+      relativeSize = "L"
+    } else if (150 < planSizeTransformed) {
+      relativeSize = "VL"
+    }
+
     const data = {
       addedName,
       partType,
       planItens,
-      planRelSz,
+      planRelSz: relativeSize,
       planSize,
       actualItens,
       actualSize,
@@ -75,9 +90,9 @@ export default function ProbeAdd() {
           <p>
             Tipos: CALC, DATA, IO, LOGIC, SETUP, TEXT
           </p>
-          <p>
+          {/* <p>
             Tamanho Relativo: VS, S, M, L, VL
-          </p>
+          </p> */}
           <Link className="back-link" to="/projetoDados">
             <FiArrowLeft size={16} color="#38b6ff" />
             Voltar para dados do projetos
@@ -87,7 +102,7 @@ export default function ProbeAdd() {
           <table className="tabela">
             <thead>
               <tr className="base">
-                <th colSpan={4}></th>
+                <th colSpan={3}></th>
                 <th colSpan={3}>ITENS PLANEJADO</th>
                 <th colSpan={2}>ACTUAL ITENS</th>
               </tr>
@@ -99,7 +114,6 @@ export default function ProbeAdd() {
 
                 <th colSpan={2}> TIPO </th>
                 <th> ITENS</th>
-                <th> TAM REL</th>
                 <th> TAM</th>
                 <th> ITENS</th>
                 <th> TAM</th>
@@ -128,13 +142,6 @@ export default function ProbeAdd() {
                     onChange={(e) =>
                       setplanItens(mask(unMask(e.target.value), ["999"]))
                     }
-                    placeholder=""
-                  />
-                </td>
-                <td>
-                  <input
-                    value={planRelSz}
-                    onChange={(e) => setplanRelSz(e.target.value.toUpperCase())}
                     placeholder=""
                   />
                 </td>
